@@ -9,9 +9,10 @@ import (
 )
 
 type AuthRepository interface {
-	CreateUser(user *entity.User) (*entity.User, error)
-	GetUserByEmail(email string) (*entity.User, error)
-	GetUserByUsername(username string) (*entity.User, error)
+    CreateUser(user *entity.User) (*entity.User, error)
+    GetUserByEmail(email string) (*entity.User, error)
+    GetUserByUsername(username string) (*entity.User, error)
+    ListUsers(keyword string, page, limit int) ([]entity.User, int64, error)
 }
 
 type authRepository struct {
@@ -54,4 +55,25 @@ func (r *authRepository) GetUserByUsername(username string) (*entity.User, error
 		return nil, err
 	}
 	return &user, nil
+}
+
+func (r *authRepository) ListUsers(keyword string, page, limit int) ([]entity.User, int64, error) {
+    var users []entity.User
+    var total int64
+
+    q := r.db.Model(&entity.User{})
+    if keyword != "" {
+        like := "%" + keyword + "%"
+        q = q.Where("email ILIKE ? OR username ILIKE ?", like, like)
+    }
+
+    if err := q.Count(&total).Error; err != nil {
+        return nil, 0, err
+    }
+
+    offset := (page - 1) * limit
+    if err := q.Order("created_at DESC").Limit(limit).Offset(offset).Find(&users).Error; err != nil {
+        return nil, 0, err
+    }
+    return users, total, nil
 }

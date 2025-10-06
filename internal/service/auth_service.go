@@ -1,17 +1,19 @@
 package service
 
 import (
-	"context"
-	"errors"
-	"go.uber.org/zap"
-	"workHub/internal/dto"
-	"workHub/internal/mapper"
-	"workHub/internal/repository"
-	"workHub/logger"
+    "context"
+    "errors"
+    "go.uber.org/zap"
+    "workHub/internal/dto"
+    "workHub/internal/mapper"
+    "workHub/internal/repository"
+    "workHub/logger"
+    "workHub/utils"
 )
 
 type AuthService interface {
-	Register(ctx context.Context, req dto.RegisterRequest) (dto.RegisterResponse, error)
+    Register(ctx context.Context, req dto.RegisterRequest) (dto.RegisterResponse, error)
+    GetListUser(ctx context.Context, keyword string, page, limit int) ([]dto.UserItem, utils.Pagination, error)
 }
 
 type DefaultAuthService struct {
@@ -69,4 +71,26 @@ func (s *DefaultAuthService) checkDuplicate(ctx context.Context, req dto.Registe
 	}
 
 	return nil
+}
+
+func (s *DefaultAuthService) GetListUser(ctx context.Context, keyword string, page, limit int) ([]dto.UserItem, utils.Pagination, error) {
+    log := logger.WithTrace(ctx, "auth_service", "GetListUser")
+    log.Info("start list users", zap.String("keyword", keyword), zap.Int("page", page), zap.Int("limit", limit))
+
+    users, total, err := s.repo.ListUsers(keyword, page, limit)
+    if err != nil {
+        log.Error("repo list failed", zap.Error(err))
+        return nil, utils.Paginate(page, limit, 0), err
+    }
+
+    items := make([]dto.UserItem, 0, len(users))
+    for i := range users {
+        items = append(items, mapper.ToUserItem(&users[i]))
+    }
+
+    meta := utils.Paginate(page, limit, int(total))
+    log.Info("list users success", zap.Int("count", len(items)), zap.Int("total", int(total)))
+    
+	
+	return items, meta, nil
 }

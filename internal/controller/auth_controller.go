@@ -1,20 +1,21 @@
 package controller
 
 import (
-	"net/http"
-	"workHub/internal/dto"
-	"workHub/internal/service"
-	"workHub/utils"
+    "net/http"
+    "strconv"
+    "workHub/internal/dto"
+    "workHub/internal/service"
+    "workHub/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
 type AuthController struct {
-	svc service.AuthService
+	service service.AuthService
 }
 
-func NewAuthController(svc service.AuthService) *AuthController {
-	return &AuthController{svc: svc}
+func NewAuthController(service service.AuthService) *AuthController {
+	return &AuthController{service: service}
 }
 
 func (a *AuthController) Register(c *gin.Context) {
@@ -26,11 +27,27 @@ func (a *AuthController) Register(c *gin.Context) {
 		return
 	}
 
-	res, err := a.svc.Register(ctx, req)
+	res, err := a.service.Register(ctx, req)
 	if err != nil {
 		utils.Error(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	utils.Success(c, "registered", res, nil)
+	utils.Success(c, "registered success", res, nil)
+}
+
+func (a *AuthController) GetListUser(c *gin.Context) {
+    ctx := c.Request.Context()
+    page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+    limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
+    
+	keyword := c.Query("keyword")
+
+    users, meta, err := a.service.GetListUser(ctx, keyword, page, limit)
+    if err != nil {
+        utils.Error(c, http.StatusInternalServerError, err.Error())
+        return
+    }
+
+    utils.Success(c, "get users success", users, meta)
 }

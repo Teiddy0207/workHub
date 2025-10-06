@@ -40,3 +40,12 @@ func ToUserEntity(req dto.RegisterRequest) (entity.User, error) {
         CreatedAt: time.Now(),
     }, nil
 }
+
+func ToUserItem(u *entity.User) dto.UserItem {
+    return dto.UserItem{
+        ID:        u.ID,
+        Email:     u.Email,
+        Username:  u.Username,
+        CreatedAt: u.CreatedAt.Format(time.RFC3339),
+    }
+}

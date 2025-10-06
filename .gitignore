@@ -26,6 +26,15 @@ go.work.sum
 
 # env file
 .env
+.env.local
+.env.*.local
+*.env
+**/.env
+**/.env.*.local
+
+# logs
+logs/
+*.log
 
 # Editor/IDE
 # .idea/
