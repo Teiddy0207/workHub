@@ -1,0 +1,5 @@
+{"level":"INFO","time":"2025-10-06T14:36:43.966+0700","caller":"service/auth_service.go:27","msg":"start register","module":"auth_service","function":"Register","trace_id":"no-trace","email":"test@example.com"}
+{"level":"INFO","time":"2025-10-06T14:36:44.033+0700","caller":"repository/auth_repo.go:31","msg":"auth_repo:CreateUser","email":"test@example.com"}
+{"level":"INFO","time":"2025-10-06T14:36:44.033+0700","caller":"service/auth_service.go:45","msg":"register success","module":"auth_service","function":"Register","trace_id":"no-trace","email":"test@example.com"}
+
+
