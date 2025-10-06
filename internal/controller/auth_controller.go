@@ -40,14 +40,15 @@ func (a *AuthController) GetListUser(c *gin.Context) {
     ctx := c.Request.Context()
     page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
     limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
-    
-	keyword := c.Query("keyword")
+    keyword := c.Query("keyword")
 
-    users, meta, err := a.service.GetListUser(ctx, keyword, page, limit)
+    result, err := a.service.GetListUser(ctx, keyword, page, limit)
     if err != nil {
         utils.Error(c, http.StatusInternalServerError, err.Error())
         return
     }
 
-    utils.Success(c, "get users success", users, meta)
+    utils.Success(c, "get users success", result, nil)
 }
+
+
