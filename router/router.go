@@ -17,6 +17,7 @@ func InitRouter() *gin.Engine {
 	db, err := config.ConnectDatabase()
 	if err != nil {
 		logger.Error("config", "ConnectDatabase", "DB connect failed", zap.Error(err))
+		panic(err)
 	}
 
 	authRepo := repository.NewAuthRepository(db)

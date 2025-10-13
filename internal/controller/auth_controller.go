@@ -1,11 +1,10 @@
 package controller
 
 import (
-    "net/http"
-    "strconv"
-    "workHub/internal/dto"
-    "workHub/internal/service"
-    "workHub/utils"
+	"net/http"
+	"workHub/internal/dto"
+	"workHub/internal/service"
+	"workHub/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -38,17 +37,13 @@ func (a *AuthController) Register(c *gin.Context) {
 
 func (a *AuthController) GetListUser(c *gin.Context) {
     ctx := c.Request.Context()
-    page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-    limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
-    keyword := c.Query("keyword")
+    query := utils.ParseQueryParams(c)
 
-    result, err := a.service.GetListUser(ctx, keyword, page, limit)
+    items, meta, err := a.service.GetListUser(ctx, query)
     if err != nil {
         utils.Error(c, http.StatusInternalServerError, err.Error())
         return
     }
 
-    utils.Success(c, "get users success", result, nil)
+    utils.Success(c, "Get users success", items, meta)
 }
-
-
