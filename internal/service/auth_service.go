@@ -14,7 +14,7 @@ import (
 
 type AuthService interface {
     Register(ctx context.Context, req dto.RegisterRequest) (dto.RegisterResponse, error)
-    GetListUser(ctx context.Context, query utils.QueryParams) ([]dto.UserItem, utils.Pagination, error)
+    GetListUser(ctx context.Context, query utils.QueryParams) ([]dto.UserItem, utils.QueryParams, error)
 }
 
 type DefaultAuthService struct {
@@ -71,14 +71,14 @@ func (s *DefaultAuthService) checkDuplicate(ctx context.Context, req dto.Registe
 	return nil
 }
 
-func (s *DefaultAuthService) GetListUser(ctx context.Context, query utils.QueryParams) ([]dto.UserItem, utils.Pagination, error) {
+func (s *DefaultAuthService) GetListUser(ctx context.Context, query utils.QueryParams) ([]dto.UserItem, utils.QueryParams, error) {
     log := logger.WithTrace(ctx, "auth_service", "GetListUser")
     log.Info("start list users", zap.String("keyword", query.Keyword), zap.Int("page", query.Page), zap.Int("limit", query.Limit))
 
     users, total, err := s.repo.ListUsers(query.Keyword, query.Page, query.Limit)
     if err != nil {
         log.Error("repo list failed", zap.Error(err))
-        return nil, utils.Paginate(query.Page, query.Limit, 0), err
+        return nil, query, err
     }
 
     items := make([]dto.UserItem, 0, len(users))
@@ -86,7 +86,7 @@ func (s *DefaultAuthService) GetListUser(ctx context.Context, query utils.QueryP
         items = append(items, mapper.ToUserItem(&users[i]))
     }
 
-    meta := utils.Paginate(query.Page, query.Limit, int(total))
+    query.SetTotal(int(total))
     log.Info("list users success", zap.Int("count", len(items)), zap.Int("total", int(total)))
-    return items, meta, nil
+    return items, query, nil
 }

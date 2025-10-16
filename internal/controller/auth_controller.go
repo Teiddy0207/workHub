@@ -36,14 +36,11 @@ func (a *AuthController) Register(c *gin.Context) {
 }
 
 func (a *AuthController) GetListUser(c *gin.Context) {
-    ctx := c.Request.Context()
-    query := utils.ParseQueryParams(c)
-
-    items, meta, err := a.service.GetListUser(ctx, query)
+    query := utils.ParseQuery(c)
+    items, query, err := a.service.GetListUser(c.Request.Context(), query)
     if err != nil {
         utils.Error(c, http.StatusInternalServerError, err.Error())
         return
     }
-
-    utils.Success(c, "Get users success", items, meta)
+    utils.Success(c, "Get users success", items, query.ToMeta())
 }
