@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"workHub/internal/dto"
 	"workHub/internal/service"
 	"workHub/pkg/handler"
@@ -37,19 +38,26 @@ func (a *AuthController) GetListUser(c *gin.Context) {
 }
 
 func (a *AuthController) Login(c *gin.Context) {
+	fmt.Printf("🎯 Login controller called\n")
 	ctx := c.Request.Context()
 
 	var req dto.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
+		fmt.Printf("❌ Bind JSON error: %v\n", err)
 		a.BaseHandler.BadRequest(c, "invalid request body")
 		return
 	}
+	
+	fmt.Printf("📝 Request received: email=%s, password=%s\n", req.Email, req.Password)
 
 	response, err := a.service.Login(ctx, req)
 	if err != nil {
+		fmt.Printf("❌ Service error: %v\n", err)
 		a.BaseHandler.BadRequest(c, "login failed")
 		return
 	}
 
+	fmt.Printf("✅ Service success, sending response\n")
+	fmt.Printf("📤 Response data: %+v\n", response)
 	a.BaseHandler.SuccessResponse(c, response, "login success")
 }

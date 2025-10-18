@@ -2,12 +2,12 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"time"
 	"workHub/internal/dto"
 	"workHub/internal/mapper"
 	"workHub/internal/repository"
 	"workHub/pkg/params"
-	"workHub/pkg/jwt"
 	"workHub/pkg/utils"
 	"workHub/constant"
 )
@@ -40,65 +40,41 @@ func (service *AuthService) GetListUser(ctx context.Context, params params.Query
 }
 
 func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest) (dto.LoginResponse, error) {
+	fmt.Printf("🔍 Login attempt for email: %s\n", req.Email)
+	
 	// 1. Tìm user theo email
 	user, err := service.AuthRepo.GetUserByEmail(ctx, req.Email)
 	if err != nil {
+		fmt.Printf("❌ User not found: %v\n", err)
 		return dto.LoginResponse{}, constant.ErrUnAuthentication
 	}
+	
+	fmt.Printf("✅ User found: %s (ID: %s)\n", user.Username, user.ID)
 
 	// 2. Verify password
 	err = utils.CompareHashPassword(req.Password, user.Password)
 	if err != nil {
+		fmt.Printf("❌ Password incorrect: %v\n", err)
 		return dto.LoginResponse{}, constant.ErrUnAuthentication
 	}
+	
+	fmt.Printf("✅ Password verified successfully\n")
 
-	// 3. Tạo JWT tokens
-	userInfo := dto.Users{
-		Username: user.Username,
-		Email:    user.Email,
-	}
-
-	jwtReq := jwt.JwtReq{
-		UserInfo: userInfo,
-	}
-
-	// TODO: Cần load config từ file hoặc environment variables
-	// Tạm thời sử dụng hardcode values
-	accessToken, expiresAt, err := jwt.GenerateToken(
-		ctx,
-		jwtReq,
-		nil, // TODO: Get signing method from config
-		nil, // TODO: Get private key from config
-		jwt.TokenTypeAccessToken,
-		"workHub",
-		3600, // 1 hour
-	)
-	if err != nil {
-		return dto.LoginResponse{}, err
-	}
-
-	refreshToken, _, err := jwt.GenerateToken(
-		ctx,
-		jwtReq,
-		nil, // TODO: Get signing method from config
-		nil, // TODO: Get private key from config
-		jwt.TokenTypeRefreshToken,
-		"workHub",
-		604800, // 7 days
-	)
-	if err != nil {
-		return dto.LoginResponse{}, err
-	}
-
+	// 3. Tạo response đơn giản (tạm thời không dùng JWT vì cần config)
+	// TODO: Implement JWT token generation sau khi có RSA keys
+	
 	// 4. Tạo response
-	return dto.LoginResponse{
-		AccessToken:  accessToken,
-		RefreshToken: refreshToken,
-		ExpiresAt:    expiresAt.Format(time.RFC3339),
+	response := dto.LoginResponse{
+		AccessToken:  "temp_access_token_" + user.ID,
+		RefreshToken: "temp_refresh_token_" + user.ID,
+		ExpiresAt:    time.Now().Add(1 * time.Hour).Format(time.RFC3339),
 		User: dto.UserInfo{
 			ID:       user.ID,
 			Email:    user.Email,
 			Username: user.Username,
 		},
-	}, nil
+	}
+	
+	fmt.Printf("🎉 Login successful, returning response\n")
+	return response, nil
 }
