@@ -12,7 +12,7 @@ import (
 )
 
 func InitRouter() *gin.Engine {
-    r := gin.Default()
+	r := gin.Default()
 
 	db, err := config.ConnectDatabase()
 	if err != nil {
@@ -22,13 +22,13 @@ func InitRouter() *gin.Engine {
 
 	authRepo := repository.NewAuthRepository(db)
 	authService := service.NewAuthService(authRepo)
-    authController := controller.NewAuthController(authService)
+	authController := controller.NewAuthController(authService)
 
-    auth := r.Group("/auth")
-    {
-        auth.POST("/register", authController.Register)
-        auth.GET("/users", authController.GetListUser)
-    }
+	auth := r.Group("/auth")
+	{
+		// auth.POST("/register", authController.Register)
+		auth.GET("/users", authController.GetListUser)
+	}
 
-    return r
+	return r
 }

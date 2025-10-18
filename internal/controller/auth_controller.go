@@ -1,46 +1,36 @@
 package controller
 
 import (
-	"net/http"
-	"workHub/internal/dto"
 	"workHub/internal/service"
-	"workHub/utils"
-
+	"workHub/pkg/handler"
+	"workHub/pkg/params"
 	"github.com/gin-gonic/gin"
 )
 
 type AuthController struct {
-	service service.AuthService
+	handler.BaseHandler
+	service service.AuthServiceInterface
 }
 
-func NewAuthController(service service.AuthService) *AuthController {
-	return &AuthController{service: service}
+func NewAuthController(service service.AuthServiceInterface) *AuthController {
+	return &AuthController{
+		BaseHandler: handler.NewBaseHandler(),
+		service:     service}
 }
 
-func (a *AuthController) Register(c *gin.Context) {
-	ctx := c.Request.Context()
 
-	var req dto.RegisterRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.Error(c, http.StatusBadRequest, err.Error())
-		return
-	}
-
-	res, err := a.service.Register(ctx, req)
-	if err != nil {
-		utils.Error(c, http.StatusBadRequest, err.Error())
-		return
-	}
-
-	utils.Success(c, "registered success", res, nil)
-}
 
 func (a *AuthController) GetListUser(c *gin.Context) {
-    query := utils.ParseQuery(c)
-    items, query, err := a.service.GetListUser(c.Request.Context(), query)
-    if err != nil {
-        utils.Error(c, http.StatusInternalServerError, err.Error())
-        return
-    }
-    utils.Success(c, "Get users success", items, query.ToMeta())
+	ctx := c.Request.Context()
+
+	params := params.NewQueryParams(c)
+
+	users, err := a.service.GetListUser(ctx, params)
+
+	if err != nil {
+		a.BaseHandler.BadRequest(c, "get all user failed")
+		return	
+	}
+
+	a.BaseHandler.SuccessResponse(c, users,  "get all user success")
 }
