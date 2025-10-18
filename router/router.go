@@ -26,6 +26,7 @@ func InitRouter() *gin.Engine {
 
 	auth := r.Group("/auth")
 	{
+		auth.POST("/login", authController.Login)
 		// auth.POST("/register", authController.Register)
 		auth.GET("/users", authController.GetListUser)
 	}

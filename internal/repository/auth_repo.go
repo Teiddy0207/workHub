@@ -20,6 +20,7 @@ type authRepository struct {
 
 type AuthRepository interface {
 	ListUsers(ctx context.Context, params params.QueryParams) (entity.PaginatedUsers, error)
+	GetUserByEmail(ctx context.Context, email string) (entity.User, error)
 }
 
 func NewAuthRepository(db *gorm.DB) AuthRepository {
@@ -70,4 +71,18 @@ func (r *authRepository) ListUsers(ctx context.Context, params params.QueryParam
 		PageNumber: params.PageNumber,
 		PageSize:   pageSize,
 	}, nil
+}
+
+func (r *authRepository) GetUserByEmail(ctx context.Context, email string) (entity.User, error) {
+	var user entity.User
+	
+	err := r.db.WithContext(ctx).
+		Where("email = ?", email).
+		First(&user).Error
+	
+	if err != nil {
+		return entity.User{}, err
+	}
+	
+	return user, nil
 }
