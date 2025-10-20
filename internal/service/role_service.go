@@ -50,7 +50,7 @@ func (s *RoleService) CreateRole(ctx context.Context, req dto.RoleRequest) (dto.
 	}
 
 	// Lấy role vừa tạo để trả về response
-	createdRole, err := s.roleRepo.GetRoleByID(ctx, role.ID)
+	createdRole, err := s.roleRepo.GetRoleByCode(ctx, req.Code)
 	if err != nil {
 		fmt.Printf("❌ Failed to get created role: %v\n", err)
 		return dto.RoleResponse{}, err

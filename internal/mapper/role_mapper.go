@@ -30,10 +30,11 @@ func ToRoleResponseList(roles []entity.Role) []dto.RoleResponse {
 // ToPaginatedRoleResponse chuyển đổi entity.PaginatedRoles thành dto.PaginatedRoleResponse
 func ToPaginatedRoleResponse(paginatedRoles entity.PaginatedRoles) dto.PaginatedRoleResponse {
 	return dto.PaginatedRoleResponse{
-		Items:      ToRoleResponseList(paginatedRoles.Items),
-		TotalItems: paginatedRoles.TotalItems,
-		PageNumber: paginatedRoles.PageNumber,
-		PageSize:   paginatedRoles.PageSize,
+		Items:       ToRoleResponseList(paginatedRoles.Items),
+		TotalItems:  paginatedRoles.TotalItems,
+		TotalPages:  (paginatedRoles.TotalItems + paginatedRoles.PageSize - 1) / paginatedRoles.PageSize,
+		CurrentPage: paginatedRoles.PageNumber,
+		PageSize:    paginatedRoles.PageSize,
 	}
 }
 

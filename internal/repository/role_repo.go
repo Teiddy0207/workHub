@@ -44,7 +44,7 @@ func (r *roleRepository) GetRoleByID(ctx context.Context, id string) (entity.Rol
 	
 	var role entity.Role
 	err := r.db.WithContext(ctx).
-		Where("id = ? AND deleted_at IS NULL", id).
+		Where("id = ?", id).
 		First(&role).Error
 	
 	if err != nil {
@@ -61,7 +61,7 @@ func (r *roleRepository) GetRoleByCode(ctx context.Context, code string) (entity
 	
 	var role entity.Role
 	err := r.db.WithContext(ctx).
-		Where("code = ? AND deleted_at IS NULL", code).
+		Where("code = ?", code).
 		First(&role).Error
 	
 	if err != nil {
@@ -78,7 +78,7 @@ func (r *roleRepository) UpdateRole(ctx context.Context, id string, role *entity
 	
 	result := r.db.WithContext(ctx).
 		Model(&entity.Role{}).
-		Where("id = ? AND deleted_at IS NULL", id).
+		Where("id = ?", id).
 		Updates(role)
 	
 	if result.Error != nil {
@@ -96,12 +96,11 @@ func (r *roleRepository) UpdateRole(ctx context.Context, id string, role *entity
 }
 
 func (r *roleRepository) DeleteRole(ctx context.Context, id string) error {
-	fmt.Printf("🔍 Soft deleting role: %s\n", id)
+	fmt.Printf("🔍 Hard deleting role: %s\n", id)
 	
 	result := r.db.WithContext(ctx).
-		Model(&entity.Role{}).
-		Where("id = ? AND deleted_at IS NULL", id).
-		Update("deleted_at", gorm.Expr("NOW()"))
+		Where("id = ?", id).
+		Delete(&entity.Role{})
 	
 	if result.Error != nil {
 		fmt.Printf("❌ Failed to delete role: %v\n", result.Error)
@@ -125,7 +124,7 @@ func (r *roleRepository) ListRoles(ctx context.Context, params params.QueryParam
 	var totalItems int64
 
 	// Tạo query cơ bản
-	query := r.db.WithContext(ctx).Model(&entity.Role{}).Where("deleted_at IS NULL")
+	query := r.db.WithContext(ctx).Model(&entity.Role{})
 
 	// Nếu có tìm kiếm theo name hoặc code
 	if params.Search != "" {
