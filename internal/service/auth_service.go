@@ -14,7 +14,7 @@ import (
 
 type AuthService struct {
 	AuthRepo   repository.AuthRepository
-	
+	JWTService JWTServiceInterface
 }
 
 type AuthServiceInterface interface {
@@ -22,9 +22,10 @@ type AuthServiceInterface interface {
 	Login(ctx context.Context, req dto.LoginRequest) (dto.LoginResponse, error)
 }
 
-func NewAuthService(AuthRepo repository.AuthRepository) AuthServiceInterface {
+func NewAuthService(AuthRepo repository.AuthRepository, JWTService JWTServiceInterface) AuthServiceInterface {
 	return &AuthService{
 		AuthRepo:   AuthRepo,
+		JWTService: JWTService,
 	}
 }
 
@@ -58,11 +59,23 @@ func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest) (dt
 	
 	fmt.Printf("✅ Password verified successfully\n")
 
+	// Tạo JWT tokens thực sự
+	accessToken, accessExpiresAt, err := service.JWTService.GenerateAccessTokenFromEntity(ctx, user)
+	if err != nil {
+		fmt.Printf("❌ Failed to generate access token: %v\n", err)
+		return dto.LoginResponse{}, constant.ErrInternalServer
+	}
+
+	refreshToken, _, err := service.JWTService.GenerateRefreshTokenFromEntity(ctx, user)
+	if err != nil {
+		fmt.Printf("❌ Failed to generate refresh token: %v\n", err)
+		return dto.LoginResponse{}, constant.ErrInternalServer
+	}
 
 	response := dto.LoginResponse{
-		AccessToken:  "temp_access_token_" + user.ID,
-		RefreshToken: "temp_refresh_token_" + user.ID,
-		ExpiresAt:    time.Now().Add(1 * time.Hour).Format(time.RFC3339),
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+		ExpiresAt:    accessExpiresAt.Format(time.RFC3339),
 		User: dto.UserInfo{
 			ID:       user.ID,
 			Email:    user.Email,
@@ -70,6 +83,6 @@ func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest) (dt
 		},
 	}
 	
-	fmt.Printf("Login successful, returning response\n")
+	fmt.Printf("✅ Login successful, JWT tokens generated\n")
 	return response, nil
 }
