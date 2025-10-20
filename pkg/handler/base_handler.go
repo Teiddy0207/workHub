@@ -78,6 +78,7 @@ func (h *responseHandler) ErrorResponse(c *gin.Context, code int, message string
 }
 
 func (h *responseHandler) BadRequest(c *gin.Context, message string, details ...any) *gin.Error {
+	c.JSON(http.StatusBadRequest, NewErrorResponse(http.StatusBadRequest, message, details))
 	return &gin.Error{
 		Type: gin.ErrorTypePublic,
 		Err:  errors.New(message),

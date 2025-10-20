@@ -53,7 +53,7 @@ func (a *AuthController) Login(c *gin.Context) {
 	response, err := a.service.Login(ctx, req)
 	if err != nil {
 		fmt.Printf("❌ Service error: %v\n", err)
-		a.BaseHandler.BadRequest(c, "login failed")
+		a.BaseHandler.BadRequest(c, err.Error())
 		return
 	}
 
