@@ -12,6 +12,6 @@ var (
 	ROLE_UPDATED_FAIL  = "Cập nhật quyền hạn thất bại"
 	ROLE_DELETED_FAIL  = "Xoá quyền hạn thất bại"
 
-	ASSIGN_PERMISSION = "Cấp quyền thành công"
+	ASSIGN_PERMISSION      = "Cấp quyền thành công"
 	ASSIGN_PERMISSION_FAIL = "Cấp quyền thất bại"
 )
