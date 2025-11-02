@@ -8,6 +8,7 @@ import (
 	"workHub/pkg/handler"
 	"workHub/pkg/params"
 	"workHub/constant"
+	"workHub/logger"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,108 +26,108 @@ func NewRoleController(service service.RoleServiceInterface) *RoleController {
 
 // CreateRole - Tạo role mới
 func (r *RoleController) CreateRole(c *gin.Context) {
-	fmt.Printf("🎯 CreateRole controller called\n")
+	logger.Info("controller", "CreateRole", "CreateRole controller called")
 	ctx := c.Request.Context()
 
 	var req dto.RoleRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		fmt.Printf("❌ Bind JSON error: %v\n", err)
+		logger.Error("controller", "CreateRole", fmt.Sprintf("Bind JSON error: %v", err))
 		r.BaseHandler.BadRequest(c, "invalid request body")
 		return
 	}
 
-	fmt.Printf("📝 Request received: name=%s, code=%s\n", req.Name, req.Code)
+	logger.Info("controller", "CreateRole", fmt.Sprintf("Request received: name=%s, code=%s", req.Name, req.Code))
 
 	response, err := r.service.CreateRole(ctx, req)
 	if err != nil {
-		fmt.Printf("❌ Service error: %v\n", err)
+		logger.Error("controller", "CreateRole", fmt.Sprintf("Service error: %v", err))
 		r.BaseHandler.BadRequest(c, err.Error())
 		return
 	}
 
-	fmt.Printf("✅ Role created successfully\n")
+	logger.Info("controller", "CreateRole", "Role created successfully")
 	r.BaseHandler.SuccessResponse(c, response, constant.ROLE_CREATED_SUCCESSFULLY)
 }
 
 // GetRoleByID - Lấy thông tin role theo ID
 func (r *RoleController) GetRoleByID(c *gin.Context) {
-	fmt.Printf("🎯 GetRoleByID controller called\n")
+	logger.Info("controller", "GetRoleByID", "GetRoleByID controller called")
 	ctx := c.Request.Context()
 
 	id := c.Param("id")
 	if id == "" {
-		fmt.Printf("❌ Missing role ID\n")
+		logger.Warn("controller", "GetRoleByID", "Missing role ID")
 		r.BaseHandler.BadRequest(c, "role ID is required")
 		return
 	}
 
-	fmt.Printf("📝 Getting role with ID: %s\n", id)
+	logger.Info("controller", "GetRoleByID", fmt.Sprintf("Getting role with ID: %s", id))
 
 	response, err := r.service.GetRoleByID(ctx, id)
 	if err != nil {
-		fmt.Printf("❌ Service error: %v\n", err)
+		logger.Error("controller", "GetRoleByID", fmt.Sprintf("Service error: %v", err))
 		r.BaseHandler.BadRequest(c, err.Error())
 		return
 	}
 
-	fmt.Printf("✅ Role retrieved successfully\n")
+	logger.Info("controller", "GetRoleByID", "Role retrieved successfully")
 	r.BaseHandler.SuccessResponse(c, response, constant.ROLE_GET_SUCCESSFULLY)
 }
 
 // UpdateRole - Cập nhật role
 func (r *RoleController) UpdateRole(c *gin.Context) {
-	fmt.Printf("🎯 UpdateRole controller called\n")
+	logger.Info("controller", "UpdateRole", "UpdateRole controller called")
 	ctx := c.Request.Context()
 
 	id := c.Param("id")
 	if id == "" {
-		fmt.Printf("❌ Missing role ID\n")
+		logger.Warn("controller", "UpdateRole", "Missing role ID")
 		r.BaseHandler.BadRequest(c, "role ID is required")
 		return
 	}
 
 	var req dto.RoleUpdateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		fmt.Printf("❌ Bind JSON error: %v\n", err)
+		logger.Error("controller", "UpdateRole", fmt.Sprintf("Bind JSON error: %v", err))
 		r.BaseHandler.BadRequest(c, "invalid request body")
 		return
 	}
 
-	fmt.Printf("📝 Updating role with ID: %s\n", id)
+	logger.Info("controller", "UpdateRole", fmt.Sprintf("Updating role with ID: %s", id))
 
 	response, err := r.service.UpdateRole(ctx, id, req)
 	if err != nil {
-		fmt.Printf("❌ Service error: %v\n", err)
+		logger.Error("controller", "UpdateRole", fmt.Sprintf("Service error: %v", err))
 		r.BaseHandler.BadRequest(c, err.Error())
 		return
 	}
 
-	fmt.Printf("✅ Role updated successfully\n")
+	logger.Info("controller", "UpdateRole", "Role updated successfully")
 	r.BaseHandler.SuccessResponse(c, response, constant.ROLE_UPDATED_SUCCESSFULLY)
 }
 
 // DeleteRole - Xóa role
 func (r *RoleController) DeleteRole(c *gin.Context) {
-	fmt.Printf("🎯 DeleteRole controller called\n")
+	logger.Info("controller", "DeleteRole", "DeleteRole controller called")
 	ctx := c.Request.Context()
 
 	id := c.Param("id")
 	if id == "" {
-		fmt.Printf("❌ Missing role ID\n")
+		logger.Warn("controller", "DeleteRole", "Missing role ID")
 		r.BaseHandler.BadRequest(c, "role ID is required")
 		return
 	}
 
-	fmt.Printf("📝 Deleting role with ID: %s\n", id)
+	logger.Info("controller", "DeleteRole", fmt.Sprintf("Deleting role with ID: %s", id))
 
 	err := r.service.DeleteRole(ctx, id)
 	if err != nil {
-		fmt.Printf("❌ Service error: %v\n", err)
+		logger.Error("controller", "DeleteRole", fmt.Sprintf("Service error: %v", err))
 		r.BaseHandler.BadRequest(c, err.Error())
 		return
 	}
 
-	fmt.Printf("✅ Role deleted successfully\n")
+	logger.Info("controller", "DeleteRole", "Role deleted successfully")
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "success",
 		"message": constant.ROLE_DELETED,
@@ -135,20 +136,20 @@ func (r *RoleController) DeleteRole(c *gin.Context) {
 
 // ListRoles - Lấy danh sách roles
 func (r *RoleController) ListRoles(c *gin.Context) {
-	fmt.Printf("🎯 ListRoles controller called\n")
+	logger.Info("controller", "ListRoles", "ListRoles controller called")
 	ctx := c.Request.Context()
 
 	params := params.NewQueryParams(c)
-	fmt.Printf("📝 Query params: page=%d, size=%d, search=%s\n", 
-		params.PageNumber, params.PageSize, params.Search)
+	logger.Info("controller", "ListRoles", fmt.Sprintf("Query params: page=%d, size=%d, search=%s", 
+		params.PageNumber, params.PageSize, params.Search))
 
 	response, err := r.service.ListRoles(ctx, params)
 	if err != nil {
-		fmt.Printf("❌ Service error: %v\n", err)
+		logger.Error("controller", "ListRoles", fmt.Sprintf("Service error: %v", err))
 		r.BaseHandler.BadRequest(c, err.Error())
 		return
 	}
 
-	fmt.Printf("✅ Roles listed successfully\n")
+	logger.Info("controller", "ListRoles", "Roles listed successfully")
 	r.BaseHandler.SuccessResponse(c, response, constant.ROLE_GET_LIST_SUCCESSFULLY)
 }

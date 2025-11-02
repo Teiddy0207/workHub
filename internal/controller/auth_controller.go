@@ -6,6 +6,7 @@ import (
 	"workHub/internal/service"
 	"workHub/pkg/handler"
 	"workHub/pkg/params"
+	"workHub/logger"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,26 +39,25 @@ func (a *AuthController) GetListUser(c *gin.Context) {
 }
 
 func (a *AuthController) Login(c *gin.Context) {
-	fmt.Printf("🎯 Login controller called\n")
+	logger.Info("controller", "Login", "Login controller called")
 	ctx := c.Request.Context()
 
 	var req dto.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		fmt.Printf("❌ Bind JSON error: %v\n", err)
+		logger.Error("controller", "Login", fmt.Sprintf("Bind JSON error: %v", err))
 		a.BaseHandler.BadRequest(c, "invalid request body")
 		return
 	}
 	
-	fmt.Printf("📝 Request received: email=%s, password=%s\n", req.Email, req.Password)
+	logger.Info("controller", "Login", fmt.Sprintf("Request received: email=%s", req.Email))
 
 	response, err := a.service.Login(ctx, req)
 	if err != nil {
-		fmt.Printf("❌ Service error: %v\n", err)
+		logger.Error("controller", "Login", fmt.Sprintf("Service error: %v", err))
 		a.BaseHandler.BadRequest(c, err.Error())
 		return
 	}
 
-	fmt.Printf("✅ Service success, sending response\n")
-	fmt.Printf("📤 Response data: %+v\n", response)
+	logger.Info("controller", "Login", "Service success, sending response")
 	a.BaseHandler.SuccessResponse(c, response, "login success")
 }

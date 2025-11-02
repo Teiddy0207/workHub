@@ -1,0 +1,74 @@
+app_name: "WorkHub"
+node_env: "development"
+
+webHttp:
+  http_host: "localhost"
+  http_address: 8080
+
+webSocket:
+  ws_host: "localhost"
+  ws_address: 8081
+  ws_allow: true
+
+postgres:
+  host: "localhost"
+  port: 5432
+  username: "postgres"
+  password: "password"
+  db_name: "workhub"
+  max_idle_conns: 10
+  max_open_conns: 100
+  conn_max_lifetime: 3600
+
+redis:
+  host: "localhost"
+  port: 6379
+  password: ""
+  db: 0
+  pool_size: 10
+  read_timeout: 3
+  write_timeout: 3
+  dial_timeout: 5
+  timeout: 3
+
+logger:
+  encoding: "json"
+  level: "info"
+  zap_type: "development"
+  disable_caller: false
+  disable_stacktrace: false
+  log_file: true
+  payload: true
+
+jwt:
+  signing_method: "RS256"
+  private_key: "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBeTJBR2E3MURNalJTTmFualkyYmFKeWR0L0xOQ3JSUTVRcFRMMkV0RTJoa1JMNjVHClNobDg5UUFGdk9Ub2UySHZNREZmd1hkWTkzZGVWamEwdXdxL2NvdW41SkJBTGt1WG9EZDJMSS9UVzVIVlZidksKUUdBeUNadDUxNzdZYnp1c3BjRG1PMVlGeHBBdmJtNFIxMnZhRlVHVnllNlVkUlpWWC9YdW1ndDVjOUcyVlNhaAowanZhNksvS1NGSk1wN2JlKy96T0ZWRllYNkdNZi9BSUpPbmJqam00Z0JqSFNoZXlIbUtaaHVGSm1YdFcxUzlKCjcwMWtMNXRjWWdaeFpCeGJHbVljUkRmY3UyaFhSNTg0VkI5ZVRla0tyS2Y5a0NqNkkrZ3M1dFV3YmtNUjN5aFYKRzRtY2NMOEZOL1BkdzlGbEpEajlaUXRqSC9Yc1dMMFZ4M2FqTFFJREFRQUJBb0lCQUJCdGVIOU42YVpkd3hFNgpJSmU0S0dGMnhpUGVJQUhtaXd5RmcrUzhDYnI3UU4vaTJpTWtwV3NOM2lqSXJiMi9wcWcwS01teUdBSGZSc084CmhnTkF4aitjcDhwbTI0UlJ6MVRkL2dIeCtTN2huQU9obUYvMFZUNWc3R25nck05cFdOUUh2YUVuM080UjJmNzMKemFHaXdOb3NNc3I5cGtqQjdkSURSY3QwSjFLVFJrTkZqMzhSUW5oa2ZJbzZNU2F3dUUyczJpdUlnazlKWlBlZQoxeEJ2dEFRTlBobTRxZ1ZiN1pUR04zY091aHdOeHk4Y3BWdUh1bC9IYy8xN0thdUFDL05IUWROTkwxVWU3OWtMCmpkbmJPWFVmMzNCZ2Y0U3VyUWtZWWFMYVB5dUFZRGFUOFV4TTc2Nms2SXJVLzJZQytkUW1QRU9iMVEwM3FWUFIKREhWVUxCa0NnWUVBK0FjOHVzeGpDYkNrZ3hDZ1lVUW91QUx1akQrN09Kd0FQYTBDNkVLZGx5QzJNMmh6cGlvdgpVYmM0Y3BydlAyeUlsR1YrQWVnZUUyZk1HbzhLT0d5anIvZm9XdExuMWR3dlVHanJ2cGQyYVZGbGFjRWFQN3lGCktvb1QzdXNwOHU0ZGN2WjdyWmRvSUxsYS9pYktjdUg4T1FBQzFwVTdWTDR1eXhFdWlSbGR1U1VDZ1lFQTBlbGkKVUxSK3I3OUlKenJaN2lhcVljNTY4SENSYmNQUVRPelU3NmdpSmlTTlJObHJJcVdXR01ZTis4V3lSVHQvWm1EYQp3MEFKNXdnRHNIajRSaUw0eVNaZnhLR29yN244UndmdWlmUWZ2MkF3cW5Ka3VlT0tZMGFodnd3SUwxc05yMDRHCjlXTHJ5eXFLZ0F5bWY3QXBmbkU0VWVJRysvRlZSRXJkQXJybjkya0NnWUFzb3BESlJSTGxvWVpabDlwazVyRTEKUEVIVnQzcG4yNXNuZmtVeHF4dFZJU3ZvNEhrL2hBUHovcmNIMk40SldlelNWOWx2V21oZk1hVEhlc3BxRVJMOApEZThndVNmRGt0Wm84QmpNdWRFemJ0U0RUWjc5clYyQnBFdWpLRXJxVHZPNXhxWEhQYUlka1gzUWt3YUgyaWRiCjBxYXdHemNNTHhXWXNjVGdJMUo4aVFLQmdGazc4WU9GZDJXVzEwRjJEemJpVVFRTEZ0QW55bXJ6RnhYY2lCanAKVExzU1JzdkI4WDFsRHcyeEJEakhyaVVvU2R4bnlCZkFuWFVOUHlSQ0NLa29MTUsyQVhoQmtNaEROQyt0KzRYQgp0YzFSUXQ3eWlrZExwNFRVZmVZTlkxMWVRODhHU0ljQWFtU1B6UmpxUjgxNFFldHlqaEtoRjM3NjlOaDNTc1RpClY4SWhBb0dCQU5wdkx3VmR6aW90TytXWmZhSEJGWGg0Q25qRnJMU0JON29uTFVFSmpweGlEQm96UDVhdURuQ0wKY0pucmJEVEtnWlAyc202K05uc1BDVjN5aS90VEVzL1hvRTBsWS9iMFZCbCtWSFptU0RnNXVmUE9SQUtFRnBQLwpqekgxODYwZkZCOVJOdjFSYWg3WkNxTTh4c21YUVNISjhFTWdDenF6Z2k4cnBlL3F2ZXg4Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg=="
+  public_key: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF5MkFHYTcxRE1qUlNOYW5qWTJiYQpKeWR0L0xOQ3JSUTVRcFRMMkV0RTJoa1JMNjVHU2hsODlRQUZ2T1RvZTJIdk1ERmZ3WGRZOTNkZVZqYTB1d3EvCmNvdW41SkJBTGt1WG9EZDJMSS9UVzVIVlZidktRR0F5Q1p0NTE3N1lienVzcGNEbU8xWUZ4cEF2Ym00UjEydmEKRlVHVnllNlVkUlpWWC9YdW1ndDVjOUcyVlNhaDBqdmE2Sy9LU0ZKTXA3YmUrL3pPRlZGWVg2R01mL0FJSk9uYgpqam00Z0JqSFNoZXlIbUtaaHVGSm1YdFcxUzlKNzAxa0w1dGNZZ1p4WkJ4YkdtWWNSRGZjdTJoWFI1ODRWQjllClRla0tyS2Y5a0NqNkkrZ3M1dFV3YmtNUjN5aFZHNG1jY0w4Rk4vUGR3OUZsSkRqOVpRdGpIL1hzV0wwVngzYWoKTFFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=="
+  issuer: "WorkHub"
+  refresh_token_expire: 604800  # 7 days
+  long_token_expire: 86400     # 1 day
+  short_token_expire: 3600     # 1 hour
+  is_refresh_token: true
+  validate_password: true
+  len_token: 32
+  token_expire: 3600
+
+session_secret_key: "your-session-secret-key"
+cookie_secret_key: "your-cookie-secret-key"
+csrf_secret_key: "your-csrf-secret-key"
+
+email:
+  smtp_host: "smtp.gmail.com"
+  smtp_port: 587
+  username: "your-email@gmail.com"
+  password: "your-app-password"
+  from_name: "WorkHub"
+
+aws:
+  region: "us-east-1"
+  bucket: "your-bucket"
+  access_key_id: "your-access-key"
+  secret_access_key: "your-secret-key"
+  public_endpoint: "https://your-bucket.s3.amazonaws.com"
+  api_endpoint: "https://s3.amazonaws.com"
+  endpoint: "https://s3.amazonaws.com"

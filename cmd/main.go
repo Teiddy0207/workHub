@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"workHub/config"
 	"workHub/logger"
 	"workHub/router"
 
@@ -23,15 +24,29 @@ func main() {
 	logger.InitLogger()
 	defer logger.Log.Sync()
 
-	r := router.InitRouter()
+	// Kết nối database và migrate
+	logger.Info("main", "main", "Connecting to database...")
+	db, err := config.ConnectDatabase()
+	if err != nil {
+		logger.Error("main", "main", fmt.Sprintf("Failed to connect database: %v", err))
+		log.Fatal(err)
+	}
+	logger.Info("main", "main", "Database connected successfully")
+
+	// Auto migrate tables
+	if err := config.AutoMigrate(db); err != nil {
+		logger.Error("main", "main", fmt.Sprintf("Failed to migrate database: %v", err))
+		log.Fatal(err)
+	}
+
+	r := router.InitRouter(db)
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8088"  // Thay đổi từ 8088 thành 8089
+		port = "8088"  
 	}
 
-	fmt.Printf("🚀 Server đang chạy tại: http://localhost:%s\n", port)
-	log.Println("🚀 Server đang chạy ở cổng:", port)
+	logger.Info("main", "main", "Server đang chạy tại: http://localhost:"+port)
 	if err := r.Run(":" + port); err != nil {
 		log.Fatal(err)
 	}

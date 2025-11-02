@@ -3,6 +3,8 @@ package config
 import (
 	"fmt"
 	"os"
+	"workHub/internal/entity"
+	"workHub/logger"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -25,4 +27,20 @@ func ConnectDatabase() (*gorm.DB, error) {
 	}
 
 	return db, nil
+}
+
+func AutoMigrate(db *gorm.DB) error {
+	logger.Info("config", "AutoMigrate", "Starting database migration...")
+	
+	err := db.AutoMigrate(
+		&entity.Role{},
+		&entity.User{},
+	)
+	if err != nil {
+		logger.Error("config", "AutoMigrate", fmt.Sprintf("Migration failed: %v", err))
+		return fmt.Errorf("failed to auto migrate: %w", err)
+	}
+	
+	logger.Info("config", "AutoMigrate", "Database migration completed: roles, users tables created/updated")
+	return nil
 }

@@ -10,6 +10,7 @@ import (
 	"workHub/pkg/params"
 	"workHub/pkg/utils"
 	"workHub/constant"
+	"workHub/logger"
 )
 
 type AuthService struct {
@@ -41,34 +42,34 @@ func (service *AuthService) GetListUser(ctx context.Context, params params.Query
 }
 
 func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest) (dto.LoginResponse, error) {
-	fmt.Printf("🔍 Login attempt for email: %s\n", req.Email)
+	logger.Info("service", "Login", fmt.Sprintf("Login attempt for email: %s", req.Email))
 	
 	user, err := service.AuthRepo.GetUserByEmail(ctx, req.Email)
 	if err != nil {
-		fmt.Printf("❌ User not found: %v\n", err)
+		logger.Error("service", "Login", fmt.Sprintf("User not found: %v", err))
 		return dto.LoginResponse{}, constant.ErrUsernameOrPasswordIncorrect
 	}
 	
-	fmt.Printf("✅ User found: %s (ID: %s)\n", user.Username, user.ID)
+	logger.Info("service", "Login", fmt.Sprintf("User found: %s (ID: %s)", user.Username, user.ID))
 
 	err = utils.CompareHashPassword(req.Password, user.Password)
 	if err != nil {
-		fmt.Printf("❌ Password incorrect: %v\n", err)
+		logger.Error("service", "Login", fmt.Sprintf("Password incorrect: %v", err))
 		return dto.LoginResponse{}, constant.ErrPasswordIncorrect
 	}
 	
-	fmt.Printf("✅ Password verified successfully\n")
+	logger.Info("service", "Login", "Password verified successfully")
 
 	// Tạo JWT tokens thực sự
 	accessToken, accessExpiresAt, err := service.JWTService.GenerateAccessTokenFromEntity(ctx, user)
 	if err != nil {
-		fmt.Printf("❌ Failed to generate access token: %v\n", err)
+		logger.Error("service", "Login", fmt.Sprintf("Failed to generate access token: %v", err))
 		return dto.LoginResponse{}, constant.ErrInternalServer
 	}
 
 	refreshToken, _, err := service.JWTService.GenerateRefreshTokenFromEntity(ctx, user)
 	if err != nil {
-		fmt.Printf("❌ Failed to generate refresh token: %v\n", err)
+		logger.Error("service", "Login", fmt.Sprintf("Failed to generate refresh token: %v", err))
 		return dto.LoginResponse{}, constant.ErrInternalServer
 	}
 
@@ -83,6 +84,6 @@ func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest) (dt
 		},
 	}
 	
-	fmt.Printf("✅ Login successful, JWT tokens generated\n")
+	logger.Info("service", "Login", "Login successful, JWT tokens generated")
 	return response, nil
 }

@@ -1,7 +1,7 @@
 package router
 
 import (
-	"workHub/config"
+	"fmt"
 	internalconfig "workHub/internal/config"
 	"workHub/internal/controller"
 	"workHub/internal/repository"
@@ -9,29 +9,25 @@ import (
 	"workHub/logger"
 
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
-func InitRouter() *gin.Engine {
+func InitRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
 
-	db, err := config.ConnectDatabase()
-	if err != nil {
-		logger.Error("config", "ConnectDatabase", "DB connect failed", zap.Error(err))
-		panic(err)
-	}
+	// db được truyền vào từ main, không cần connect lại
 
 	// Load config để lấy JWT config
 	cfg, err := internalconfig.LoadConfig()
 	if err != nil {
-		logger.Error("config", "LoadConfig", "Config load failed", zap.Error(err))
+		logger.Error("config", "LoadConfig", fmt.Sprintf("Config load failed: %v", err))
 		panic(err)
 	}
 
 	// Khởi tạo JWT service
 	jwtService, err := service.NewJWTService(*cfg)
 	if err != nil {
-		logger.Error("service", "NewJWTService", "JWT service init failed", zap.Error(err))
+		logger.Error("service", "NewJWTService", fmt.Sprintf("JWT service init failed: %v", err))
 		panic(err)
 	}
 

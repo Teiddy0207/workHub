@@ -3,6 +3,7 @@ package mapper
 import (
 	"workHub/internal/dto"
 	"workHub/internal/entity"
+	"github.com/google/uuid"
 )
 
 // ToRoleResponse chuyển đổi entity.Role thành dto.RoleResponse
@@ -46,9 +47,30 @@ func ToRoleEntity(req dto.RoleRequest) entity.Role {
 	}
 
 	return entity.Role{
+		ID:          uuid.New().String(),
 		Name:        req.Name,
 		Code:        req.Code,
 		Description: req.Description,
 		IsActive:    isActive,
 	}
+}
+
+// ToRoleUpdateEntity chuyển đổi dto.RoleUpdateRequest thành entity.Role (chỉ các field cần update)
+func ToRoleUpdateEntity(req dto.RoleUpdateRequest) *entity.Role {
+	updateData := &entity.Role{}
+	
+	if req.Name != nil {
+		updateData.Name = *req.Name
+	}
+	if req.Code != nil {
+		updateData.Code = *req.Code
+	}
+	if req.Description != nil {
+		updateData.Description = *req.Description
+	}
+	if req.IsActive != nil {
+		updateData.IsActive = *req.IsActive
+	}
+	
+	return updateData
 }

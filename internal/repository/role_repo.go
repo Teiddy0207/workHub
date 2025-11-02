@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"workHub/internal/entity"
+	"workHub/logger"
 	"workHub/pkg/params"
 
 	"gorm.io/gorm"
@@ -27,99 +28,99 @@ func NewRoleRepository(db *gorm.DB) RoleRepository {
 }
 
 func (r *roleRepository) CreateRole(ctx context.Context, role *entity.Role) error {
-	fmt.Printf("🔍 Creating role: %s (%s)\n", role.Name, role.Code)
-	
+	logger.Info("repository", "CreateRole", fmt.Sprintf("Creating role: %s (%s)", role.Name, role.Code))
+
 	err := r.db.WithContext(ctx).Create(role).Error
 	if err != nil {
-		fmt.Printf("❌ Failed to create role: %v\n", err)
+		logger.Error("repository", "CreateRole", fmt.Sprintf("Failed to create role: %v", err))
 		return err
 	}
-	
-	fmt.Printf("✅ Role created successfully: %s\n", role.ID)
+
+	logger.Info("repository", "CreateRole", fmt.Sprintf("Role created successfully: %s", role.ID))
 	return nil
 }
 
 func (r *roleRepository) GetRoleByID(ctx context.Context, id string) (entity.Role, error) {
-	fmt.Printf("🔍 Getting role by ID: %s\n", id)
-	
+	logger.Info("repository", "GetRoleByID", fmt.Sprintf("Getting role by ID: %s", id))
+
 	var role entity.Role
 	err := r.db.WithContext(ctx).
 		Where("id = ?", id).
 		First(&role).Error
-	
+
 	if err != nil {
-		fmt.Printf("❌ Role not found: %v\n", err)
+		logger.Error("repository", "GetRoleByID", fmt.Sprintf("Role not found: %s, error: %v", id, err))
 		return entity.Role{}, err
 	}
-	
-	fmt.Printf("✅ Role found: %s\n", role.Name)
+
+	logger.Info("repository", "GetRoleByID", fmt.Sprintf("Role found: %s", role.Name))
 	return role, nil
 }
 
 func (r *roleRepository) GetRoleByCode(ctx context.Context, code string) (entity.Role, error) {
-	fmt.Printf("🔍 Getting role by code: %s\n", code)
-	
+	logger.Info("repository", "GetRoleByCode", fmt.Sprintf("Getting role by code: %s", code))
+
 	var role entity.Role
 	err := r.db.WithContext(ctx).
 		Where("code = ?", code).
 		First(&role).Error
-	
+
 	if err != nil {
-		fmt.Printf("❌ Role not found: %v\n", err)
+		logger.Error("repository", "GetRoleByCode", fmt.Sprintf("Role not found: %s, error: %v", code, err))
 		return entity.Role{}, err
 	}
-	
-	fmt.Printf("✅ Role found: %s\n", role.Name)
+
+	logger.Info("repository", "GetRoleByCode", fmt.Sprintf("Role found: %s", role.Name))
 	return role, nil
 }
 
 func (r *roleRepository) UpdateRole(ctx context.Context, id string, role *entity.Role) error {
-	fmt.Printf("🔍 Updating role: %s\n", id)
-	
+	logger.Info("repository", "UpdateRole", fmt.Sprintf("Updating role: %s", id))
+
 	result := r.db.WithContext(ctx).
 		Model(&entity.Role{}).
 		Where("id = ?", id).
 		Updates(role)
-	
+
 	if result.Error != nil {
-		fmt.Printf("❌ Failed to update role: %v\n", result.Error)
+		logger.Error("repository", "UpdateRole", fmt.Sprintf("Failed to update role: %s, error: %v", id, result.Error))
 		return result.Error
 	}
-	
+
 	if result.RowsAffected == 0 {
-		fmt.Printf("❌ Role not found for update: %s\n", id)
+		logger.Error("repository", "UpdateRole", fmt.Sprintf("Role not found for update: %s", id))
 		return gorm.ErrRecordNotFound
 	}
-	
-	fmt.Printf("✅ Role updated successfully: %s\n", id)
+
+	logger.Info("repository", "UpdateRole", fmt.Sprintf("Role updated successfully: %s", id))
 	return nil
 }
 
 func (r *roleRepository) DeleteRole(ctx context.Context, id string) error {
-	fmt.Printf("🔍 Hard deleting role: %s\n", id)
-	
+	logger.Info("repository", "DeleteRole", fmt.Sprintf("Hard deleting role: %s", id))
+
 	result := r.db.WithContext(ctx).
 		Where("id = ?", id).
 		Delete(&entity.Role{})
-	
+
 	if result.Error != nil {
-		fmt.Printf("❌ Failed to delete role: %v\n", result.Error)
+		logger.Error("repository", "DeleteRole", fmt.Sprintf("Failed to delete role: %s, error: %v", id, result.Error))
 		return result.Error
 	}
-	
+
 	if result.RowsAffected == 0 {
-		fmt.Printf("❌ Role not found for deletion: %s\n", id)
+		logger.Error("repository", "DeleteRole", fmt.Sprintf("Role not found for deletion: %s", id))
 		return gorm.ErrRecordNotFound
 	}
-	
-	fmt.Printf("✅ Role deleted successfully: %s\n", id)
+
+	logger.Info("repository", "DeleteRole", fmt.Sprintf("Role deleted successfully: %s", id))
 	return nil
 }
 
 func (r *roleRepository) ListRoles(ctx context.Context, params params.QueryParams) (entity.PaginatedRoles, error) {
-	fmt.Printf("🔍 Listing roles with params: page=%d, size=%d, search=%s\n", 
-		params.PageNumber, params.PageSize, params.Search)
-	
+	logger.Info("repository", "ListRoles", fmt.Sprintf("Listing roles with params: page=%d, size=%d, search=%s",
+		params.PageNumber, params.PageSize, params.Search))
+
 	var roles []entity.Role
 	var totalItems int64
 
@@ -129,13 +130,13 @@ func (r *roleRepository) ListRoles(ctx context.Context, params params.QueryParam
 	// Nếu có tìm kiếm theo name hoặc code
 	if params.Search != "" {
 		searchTerm := "%" + params.Search + "%"
-		query = query.Where("name ILIKE ? OR code ILIKE ? OR description ILIKE ?", 
+		query = query.Where("name ILIKE ? OR code ILIKE ? OR description ILIKE ?",
 			searchTerm, searchTerm, searchTerm)
 	}
 
 	// Đếm tổng số role trước khi phân trang
 	if err := query.Count(&totalItems).Error; err != nil {
-		fmt.Printf("❌ Failed to count roles: %v\n", err)
+		logger.Error("repository", "ListRoles", fmt.Sprintf("Failed to count roles: %v", err))
 		return entity.PaginatedRoles{}, err
 	}
 
@@ -148,7 +149,7 @@ func (r *roleRepository) ListRoles(ctx context.Context, params params.QueryParam
 		Limit(params.PageSize).
 		Order("created_at DESC").
 		Find(&roles).Error; err != nil {
-		fmt.Printf("❌ Failed to fetch roles: %v\n", err)
+		logger.Error("repository", "ListRoles", fmt.Sprintf("Failed to fetch roles: %v", err))
 		return entity.PaginatedRoles{}, err
 	}
 
@@ -157,7 +158,7 @@ func (r *roleRepository) ListRoles(ctx context.Context, params params.QueryParam
 		pageSize = 10 // Giá trị mặc định
 	}
 
-	fmt.Printf("✅ Found %d roles (total: %d)\n", len(roles), totalItems)
+	logger.Info("repository", "ListRoles", fmt.Sprintf("Found %d roles (total: %d)", len(roles), totalItems))
 
 	// Trả kết quả
 	return entity.PaginatedRoles{

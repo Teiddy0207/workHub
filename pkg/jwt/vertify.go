@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"workHub/constant"
+	"workHub/logger"
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -21,19 +22,19 @@ func VerifyToken(ctx context.Context, publicKey *rsa.PublicKey, tokenStr string)
 
 	if err != nil {
 		if ve, ok := err.(*jwt.ValidationError); ok {
-			fmt.Println("JWT validation error:", ve)
+			logger.Error("jwt", "VerifyToken", fmt.Sprintf("JWT validation error: %v", ve))
 			if ve.Errors&jwt.ValidationErrorExpired != 0 {
-				fmt.Println("Token expired")
+				logger.Warn("jwt", "VerifyToken", "Token expired")
 				return claims, constant.ErrUnAuthentication
 			}
 		} else {
-			fmt.Println("JWT parse error:", err)
+			logger.Error("jwt", "VerifyToken", fmt.Sprintf("JWT parse error: %v", err))
 		}
 		return claims, constant.ErrUnAuthentication
 	}
 
 	if !token.Valid {
-		fmt.Println("Token invalid")
+		logger.Warn("jwt", "VerifyToken", "Token invalid")
 		return claims, constant.ErrUnAuthentication
 	}
 
