@@ -5,28 +5,32 @@ import (
 	"fmt"
 	"time"
 	"workHub/internal/dto"
+	"workHub/internal/entity"
 	"workHub/internal/mapper"
 	"workHub/internal/repository"
 	"workHub/pkg/params"
 	"workHub/pkg/utils"
 	"workHub/constant"
 	"workHub/logger"
+	"github.com/google/uuid"
 )
 
 type AuthService struct {
-	AuthRepo   repository.AuthRepository
-	JWTService JWTServiceInterface
+	AuthRepo      repository.AuthRepository
+	SessionRepo   repository.SessionRepository
+	JWTService    JWTServiceInterface
 }
 
 type AuthServiceInterface interface {
 	GetListUser(ctx context.Context, params params.QueryParams) (dto.PaginatedUserResponse, error)
-	Login(ctx context.Context, req dto.LoginRequest) (dto.LoginResponse, error)
+	Login(ctx context.Context, req dto.LoginRequest, ipAddress, userAgent string) (dto.LoginResponse, error)
 }
 
-func NewAuthService(AuthRepo repository.AuthRepository, JWTService JWTServiceInterface) AuthServiceInterface {
+func NewAuthService(AuthRepo repository.AuthRepository, SessionRepo repository.SessionRepository, JWTService JWTServiceInterface) AuthServiceInterface {
 	return &AuthService{
-		AuthRepo:   AuthRepo,
-		JWTService: JWTService,
+		AuthRepo:    AuthRepo,
+		SessionRepo: SessionRepo,
+		JWTService:  JWTService,
 	}
 }
 
@@ -41,7 +45,7 @@ func (service *AuthService) GetListUser(ctx context.Context, params params.Query
 
 }
 
-func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest) (dto.LoginResponse, error) {
+func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest, ipAddress, userAgent string) (dto.LoginResponse, error) {
 	logger.Info("service", "Login", fmt.Sprintf("Login attempt for email: %s", req.Email))
 	
 	user, err := service.AuthRepo.GetUserByEmail(ctx, req.Email)
@@ -60,7 +64,7 @@ func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest) (dt
 	
 	logger.Info("service", "Login", "Password verified successfully")
 
-	// Tạo JWT tokens thực sự
+	// Tạo JWT tokens
 	accessToken, accessExpiresAt, err := service.JWTService.GenerateAccessTokenFromEntity(ctx, user)
 	if err != nil {
 		logger.Error("service", "Login", fmt.Sprintf("Failed to generate access token: %v", err))
@@ -71,6 +75,27 @@ func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest) (dt
 	if err != nil {
 		logger.Error("service", "Login", fmt.Sprintf("Failed to generate refresh token: %v", err))
 		return dto.LoginResponse{}, constant.ErrInternalServer
+	}
+
+	// Lưu session vào database
+	session := &entity.Session{
+		ID:           uuid.New().String(),
+		UserID:       user.ID,
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+		ExpiresAt:    *accessExpiresAt, // Dereference pointer
+		IsActive:     true,
+		IPAddress:    ipAddress,
+		UserAgent:    userAgent,
+	}
+	
+	err = service.SessionRepo.CreateSession(ctx, session)
+	if err != nil {
+		logger.Error("service", "Login", fmt.Sprintf("Failed to create session: %v", err))
+		// Không return error vì tokens đã được tạo, chỉ log warning
+		logger.Warn("service", "Login", "Session not saved but login continues")
+	} else {
+		logger.Info("service", "Login", fmt.Sprintf("Session saved successfully: %s", session.ID))
 	}
 
 	response := dto.LoginResponse{

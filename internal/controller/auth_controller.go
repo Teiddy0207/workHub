@@ -8,6 +8,7 @@ import (
 	"workHub/pkg/params"
 	"workHub/logger"
 	"github.com/gin-gonic/gin"
+	"workHub/constant"
 )
 
 type AuthController struct {
@@ -45,13 +46,17 @@ func (a *AuthController) Login(c *gin.Context) {
 	var req dto.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		logger.Error("controller", "Login", fmt.Sprintf("Bind JSON error: %v", err))
-		a.BaseHandler.BadRequest(c, "invalid request body")
+		a.BaseHandler.BadRequest(c, constant.LOGIN_SUCCESSFULLY)
 		return
 	}
 	
 	logger.Info("controller", "Login", fmt.Sprintf("Request received: email=%s", req.Email))
 
-	response, err := a.service.Login(ctx, req)
+	// Lấy IP address và User-Agent từ request
+	ipAddress := c.ClientIP()
+	userAgent := c.GetHeader("User-Agent")
+
+	response, err := a.service.Login(ctx, req, ipAddress, userAgent)
 	if err != nil {
 		logger.Error("controller", "Login", fmt.Sprintf("Service error: %v", err))
 		a.BaseHandler.BadRequest(c, err.Error())

@@ -7,6 +7,8 @@ import (
 	"workHub/internal/repository"
 	"workHub/internal/service"
 	"workHub/logger"
+	"workHub/middleware"
+	"workHub/pkg/jwt"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -31,8 +33,16 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 		panic(err)
 	}
 
+	// Parse public key để dùng trong middleware
+	_, publicKey, _, err := jwt.ParseKey(cfg.Jwt)
+	if err != nil {
+		logger.Error("router", "InitRouter", fmt.Sprintf("Failed to parse JWT keys: %v", err))
+		panic(err)
+	}
+
 	authRepo := repository.NewAuthRepository(db)
-	authService := service.NewAuthService(authRepo, jwtService)
+	sessionRepo := repository.NewSessionRepository(db)
+	authService := service.NewAuthService(authRepo, sessionRepo, jwtService)
 	authController := controller.NewAuthController(authService)
 
 	// Role services
@@ -40,20 +50,29 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 	roleService := service.NewRoleService(roleRepo)
 	roleController := controller.NewRoleController(roleService)
 
+	// Public routes (không cần authentication)
 	auth := r.Group("/auth")
 	{
 		auth.POST("/login", authController.Login)
 		// auth.POST("/register", authController.Register)
-		auth.GET("/users", authController.GetListUser)
 	}
 
-	roles := r.Group("/roles")
+	// Protected routes (cần authentication)
+	protected := r.Group("/")
+	protected.Use(middleware.AuthMiddleware(publicKey))
 	{
-		roles.POST("", roleController.CreateRole)
-		roles.GET("", roleController.ListRoles)
-		roles.GET("/:id", roleController.GetRoleByID)
-		roles.PUT("/:id", roleController.UpdateRole)
-		roles.DELETE("/:id", roleController.DeleteRole)
+		// Auth routes cần đăng nhập
+		protected.GET("/auth/users", authController.GetListUser)
+
+		// Role routes cần đăng nhập
+		roles := protected.Group("/roles")
+		{
+			roles.POST("", roleController.CreateRole)
+			roles.GET("", roleController.ListRoles)
+			roles.GET("/:id", roleController.GetRoleByID)
+			roles.PUT("/:id", roleController.UpdateRole)
+			roles.DELETE("/:id", roleController.DeleteRole)
+		}
 	}
 
 	return r

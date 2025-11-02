@@ -35,12 +35,13 @@ func AutoMigrate(db *gorm.DB) error {
 	err := db.AutoMigrate(
 		&entity.Role{},
 		&entity.User{},
+		&entity.Session{},
 	)
 	if err != nil {
 		logger.Error("config", "AutoMigrate", fmt.Sprintf("Migration failed: %v", err))
 		return fmt.Errorf("failed to auto migrate: %w", err)
 	}
 	
-	logger.Info("config", "AutoMigrate", "Database migration completed: roles, users tables created/updated")
+	logger.Info("config", "AutoMigrate", "Database migration completed: roles, users, sessions tables created/updated")
 	return nil
 }
