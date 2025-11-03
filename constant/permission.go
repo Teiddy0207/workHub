@@ -1,7 +1,7 @@
 package constant
 
 var (
-	PERMISSION_CREATED_FAIL  = "Tạo mới quyền hạn thành công"
+	PERMISSION_CREATED_FAIL  = "Tạo mới quyền hạn thất bại"
 	PERMISSION_UPDATED_FAIL  = "Cập nhật quyền hạn thất bại"
 	PERMISSION_DELETED_FAIL  = "Xoá quyền hạn thất bại"
 	PERMISSION_GET_LIST_FAIL = "Lấy danh sách quyền hạn thất bại"

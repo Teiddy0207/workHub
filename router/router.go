@@ -17,23 +17,17 @@ import (
 func InitRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
 
-	// db được truyền vào từ main, không cần connect lại
-
-	// Load config để lấy JWT config
 	cfg, err := internalconfig.LoadConfig()
 	if err != nil {
 		logger.Error("config", "LoadConfig", fmt.Sprintf("Config load failed: %v", err))
 		panic(err)
 	}
 
-	// Khởi tạo JWT service
 	jwtService, err := service.NewJWTService(*cfg)
 	if err != nil {
 		logger.Error("service", "NewJWTService", fmt.Sprintf("JWT service init failed: %v", err))
 		panic(err)
 	}
-
-	// Parse public key để dùng trong middleware
 	_, publicKey, _, err := jwt.ParseKey(cfg.Jwt)
 	if err != nil {
 		logger.Error("router", "InitRouter", fmt.Sprintf("Failed to parse JWT keys: %v", err))
@@ -50,6 +44,11 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 	roleService := service.NewRoleService(roleRepo)
 	roleController := controller.NewRoleController(roleService)
 
+	// Permission services
+	permissionRepo := repository.NewPermissionRepository(db)
+	permissionService := service.NewPermissionService(permissionRepo, roleRepo)
+	permissionController := controller.NewPermissionController(permissionService)
+
 	// Public routes (không cần authentication)
 	auth := r.Group("/auth")
 	{
@@ -58,11 +57,23 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 	}
 
 	// Protected routes (cần authentication)
-	protected := r.Group("/")
+	protected := r.Group("/api/v1/")
 	protected.Use(middleware.AuthMiddleware(publicKey))
 	{
-		// Auth routes cần đăng nhập
-		protected.GET("/auth/users", authController.GetListUser)
+		// User routes với permission check
+		users := protected.Group("/users")
+		{
+			// Route xem danh sách users - cần quyền read
+			users.GET("", middleware.PermissionMiddleware(permissionRepo, "user.read"), authController.GetListUser)
+			
+			// Route quản lý roles của user
+			users.POST("/:id/roles", permissionController.AssignRolesToUser)
+			users.DELETE("/:id/roles", permissionController.RemoveRolesFromUser)
+			users.GET("/:id/permissions", permissionController.GetUserPermissions)
+			
+			// Ví dụ: Route xóa user - cần quyền delete (cần tạo method DeleteUser trong AuthController)
+			// users.DELETE("/:id", middleware.PermissionMiddleware(permissionRepo, "user.delete"), authController.DeleteUser)
+		}
 
 		// Role routes cần đăng nhập
 		roles := protected.Group("/roles")
@@ -72,6 +83,20 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 			roles.GET("/:id", roleController.GetRoleByID)
 			roles.PUT("/:id", roleController.UpdateRole)
 			roles.DELETE("/:id", roleController.DeleteRole)
+
+			// Role-Permission management
+			roles.POST("/:id/permissions", permissionController.AssignPermissionsToRole)
+			roles.DELETE("/:id/permissions", permissionController.RemovePermissionsFromRole)
+			roles.GET("/:id/permissions", permissionController.GetRoleWithPermissions)
+		}
+
+		permissions := protected.Group("/permissions")
+		{
+			permissions.POST("", permissionController.CreatePermission)
+			permissions.GET("", permissionController.ListPermissions)
+			permissions.GET("/:id", permissionController.GetPermissionByID)
+			permissions.PUT("/:id", permissionController.UpdatePermission)
+			permissions.DELETE("/:id", permissionController.DeletePermission)
 		}
 	}
 
