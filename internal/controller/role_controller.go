@@ -3,7 +3,6 @@ package controller
 import (
 	"errors"
 	"fmt"
-	"net/http"
 	"workHub/internal/dto"
 	"workHub/internal/service"
 	"workHub/pkg/handler"
@@ -135,7 +134,6 @@ func (r *RoleController) DeleteRole(c *gin.Context) {
 	err := r.service.DeleteRole(ctx, id)
 	if err != nil {
 		logger.Error("controller", "DeleteRole", fmt.Sprintf("Service error: %v", err))
-		// Dùng error cụ thể nếu có, ngược lại dùng FAIL constant
 		if errors.Is(err, constant.ErrNotFound) {
 			r.BaseHandler.BadRequest(c, err.Error())
 		} else {
@@ -145,10 +143,7 @@ func (r *RoleController) DeleteRole(c *gin.Context) {
 	}
 
 	logger.Info("controller", "DeleteRole", "Role deleted successfully")
-	c.JSON(http.StatusOK, gin.H{
-		"status":  "success",
-		"message": constant.ROLE_DELETED,
-	})
+	r.BaseHandler.SuccessResponse(c, nil, constant.ROLE_DELETED)
 }
 
 // ListRoles - Lấy danh sách roles
