@@ -2,7 +2,7 @@ version: "3.8"
 services:
   postgres:
     image: postgres:14
-    container_name: workhub_postges
+    container_name: workhub_postgres
     restart: always
     environment:
       POSTGRES_USER: user
@@ -12,6 +12,25 @@ services:
       - "5438:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - workhub_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: workhub_redis
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - workhub_network
 
 volumes:
   postgres_data:
+  redis_data:
+
+networks:
+  workhub_network:
+    driver: bridge

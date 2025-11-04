@@ -5,11 +5,30 @@ import (
 	"log"
 	"os"
 	"workHub/config"
+	internalconfig "workHub/internal/config"
 	"workHub/logger"
 	"workHub/router"
 
+	"workHub/pkg/utils"
+
 	"github.com/joho/godotenv"
 )
+
+func InitApp(cfg *internalconfig.Config) {
+	if cfg.Redis != nil {
+		utils.InitRedis(
+			cfg.Redis.Host,
+			cfg.Redis.Port,
+			cfg.Redis.Password,
+			cfg.Redis.DB,
+			cfg.Redis.PoolSize,
+			cfg.Redis.ReadTimeout,
+			cfg.Redis.WriteTimeout,
+			cfg.Redis.DialTimeout,
+			cfg.Redis.Timeout,
+		)
+	}
+}
 
 func main() {
 	if err := godotenv.Load(".env"); err != nil {
@@ -24,7 +43,15 @@ func main() {
 	logger.InitLogger()
 	defer logger.Log.Sync()
 
-	// Kết nối database và migrate
+	cfg, err := internalconfig.LoadConfig()
+	if err != nil {
+		logger.Error("main", "main", fmt.Sprintf("Failed to load config: %v", err))
+		log.Fatal(err)
+	}
+
+	// Khởi tạo Redis
+	InitApp(cfg)
+
 	logger.Info("main", "main", "Connecting to database...")
 	db, err := config.ConnectDatabase()
 	if err != nil {
@@ -43,7 +70,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8088"  
+		port = "8088"
 	}
 
 	logger.Info("main", "main", "Server đang chạy tại: http://localhost:"+port)

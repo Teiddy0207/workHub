@@ -202,3 +202,38 @@
 {"level":"INFO","time":"2025-11-03T23:08:34.509+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
 {"level":"INFO","time":"2025-11-03T23:10:15.569+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example123.com"}
 {"level":"WARN","time":"2025-11-03T23:10:15.570+0700","caller":"logger/logger.go:41","msg":"middleware:PermissionMiddleware","msg":"Invalid user ID type"}
+{"level":"INFO","time":"2025-11-04T08:59:34.194+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-04T08:59:34.236+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-04T08:59:34.236+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-04T08:59:34.729+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"INFO","time":"2025-11-04T08:59:34.781+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-11-04T09:03:22.401+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
+{"level":"INFO","time":"2025-11-04T09:03:22.401+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example123.com"}
+{"level":"INFO","time":"2025-11-04T09:03:22.402+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example123.com"}
+{"level":"INFO","time":"2025-11-04T09:03:22.406+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy123 (ID: 7003f053-a587-473c-9a18-40163557fba2)"}
+{"level":"INFO","time":"2025-11-04T09:03:22.623+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
+{"level":"INFO","time":"2025-11-04T09:03:22.625+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 7003f053-a587-473c-9a18-40163557fba2"}
+{"level":"INFO","time":"2025-11-04T09:03:22.628+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: b27df429-517b-47de-8f1b-17a6d9e19d59"}
+{"level":"INFO","time":"2025-11-04T09:03:22.628+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved successfully: b27df429-517b-47de-8f1b-17a6d9e19d59"}
+{"level":"INFO","time":"2025-11-04T09:03:22.628+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
+{"level":"INFO","time":"2025-11-04T09:03:22.628+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"INFO","time":"2025-11-04T09:26:10.808+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
+{"level":"INFO","time":"2025-11-04T09:26:10.809+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example123.com"}
+{"level":"INFO","time":"2025-11-04T09:26:10.809+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example123.com"}
+{"level":"INFO","time":"2025-11-04T09:26:10.853+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy123 (ID: 7003f053-a587-473c-9a18-40163557fba2)"}
+{"level":"INFO","time":"2025-11-04T09:26:11.094+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
+{"level":"INFO","time":"2025-11-04T09:26:11.100+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 7003f053-a587-473c-9a18-40163557fba2"}
+{"level":"INFO","time":"2025-11-04T09:26:11.115+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: bfb04bec-952b-4e3d-8ebf-d7fa38aa3706"}
+{"level":"INFO","time":"2025-11-04T09:26:11.116+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved successfully: bfb04bec-952b-4e3d-8ebf-d7fa38aa3706"}
+{"level":"INFO","time":"2025-11-04T09:26:11.116+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
+{"level":"INFO","time":"2025-11-04T09:26:11.116+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"INFO","time":"2025-11-04T09:27:51.238+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-04T09:27:51.249+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-04T09:27:51.250+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-04T09:27:51.499+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"INFO","time":"2025-11-04T09:27:51.501+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-11-04T09:28:45.649+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-04T09:28:45.660+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-04T09:28:45.660+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-04T09:28:45.837+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"INFO","time":"2025-11-04T09:28:45.839+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
