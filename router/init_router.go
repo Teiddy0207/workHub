@@ -26,7 +26,8 @@ func InitDependencies(db *gorm.DB) (*Dependencies, error) {
 
 	authRepo := repository.NewAuthRepository(db)
 	sessionRepo := repository.NewSessionRepository(db)
-	authService := service.NewAuthService(authRepo, sessionRepo, jwtConfig.Service)
+	sessionRedisRepo := repository.NewSessionRedisRepository()
+	authService := service.NewAuthService(authRepo, sessionRepo, sessionRedisRepo, jwtConfig.Service)
 	authController := controller.NewAuthController(authService)
 
 	roleRepo := repository.NewRoleRepository(db)

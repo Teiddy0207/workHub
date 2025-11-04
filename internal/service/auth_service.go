@@ -16,9 +16,10 @@ import (
 )
 
 type AuthService struct {
-	AuthRepo      repository.AuthRepository
-	SessionRepo   repository.SessionRepository
-	JWTService    JWTServiceInterface
+	AuthRepo          repository.AuthRepository
+	SessionRepo       repository.SessionRepository
+	SessionRedisRepo  repository.SessionRedisRepository
+	JWTService        JWTServiceInterface
 }
 
 type AuthServiceInterface interface {
@@ -26,11 +27,12 @@ type AuthServiceInterface interface {
 	Login(ctx context.Context, req dto.LoginRequest, ipAddress, userAgent string) (dto.LoginResponse, error)
 }
 
-func NewAuthService(AuthRepo repository.AuthRepository, SessionRepo repository.SessionRepository, JWTService JWTServiceInterface) AuthServiceInterface {
+func NewAuthService(AuthRepo repository.AuthRepository, SessionRepo repository.SessionRepository, SessionRedisRepo repository.SessionRedisRepository, JWTService JWTServiceInterface) AuthServiceInterface {
 	return &AuthService{
-		AuthRepo:    AuthRepo,
-		SessionRepo: SessionRepo,
-		JWTService:  JWTService,
+		AuthRepo:         AuthRepo,
+		SessionRepo:      SessionRepo,
+		SessionRedisRepo: SessionRedisRepo,
+		JWTService:       JWTService,
 	}
 }
 
@@ -89,13 +91,29 @@ func (service *AuthService) Login(ctx context.Context, req dto.LoginRequest, ipA
 		UserAgent:    userAgent,
 	}
 	
+	// Lưu session vào database
 	err = service.SessionRepo.CreateSession(ctx, session)
 	if err != nil {
 		logger.Error("service", "Login", fmt.Sprintf("Failed to create session: %v", err))
 		// Không return error vì tokens đã được tạo, chỉ log warning
-		logger.Warn("service", "Login", "Session not saved but login continues")
+		logger.Warn("service", "Login", "Session not saved to DB but login continues")
 	} else {
-		logger.Info("service", "Login", fmt.Sprintf("Session saved successfully: %s", session.ID))
+		logger.Info("service", "Login", fmt.Sprintf("Session saved to DB successfully: %s", session.ID))
+	}
+
+	// Lưu session vào Redis cache
+	if service.SessionRedisRepo != nil {
+		expiration := time.Until(*accessExpiresAt)
+		if expiration > 0 {
+			err = service.SessionRedisRepo.SaveSession(ctx, session, expiration)
+			if err != nil {
+				logger.Error("service", "Login", fmt.Sprintf("Failed to save session to Redis: %v", err))
+				// Không return error, chỉ log warning vì session đã được lưu vào DB
+				logger.Warn("service", "Login", "Session not saved to Redis but login continues")
+			} else {
+				logger.Info("service", "Login", fmt.Sprintf("Session saved to Redis successfully: %s", session.ID))
+			}
+		}
 	}
 
 	response := dto.LoginResponse{
