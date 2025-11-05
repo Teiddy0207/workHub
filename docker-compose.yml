@@ -27,9 +27,69 @@ services:
     networks:
       - workhub_network
 
+  # ✅ PostgreSQL exporter
+  postgres_exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter
+    container_name: workhub_postgres_exporter
+    restart: always
+    environment:
+      DATA_SOURCE_NAME: "postgresql://user:password@postgres:5432/workhub_db?sslmode=disable"
+    ports:
+      - "9187:9187"
+    depends_on:
+      - postgres
+    networks:
+      - workhub_network
+
+  # ✅ Redis exporter
+  redis_exporter:
+    image: oliver006/redis_exporter
+    container_name: workhub_redis_exporter
+    restart: always
+    command: ["--redis.addr=redis:6379"]
+    ports:
+      - "9121:9121"
+    depends_on:
+      - redis
+    networks:
+      - workhub_network
+
+  # ✅ Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: workhub_prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - workhub_network
+    depends_on:
+      - postgres_exporter
+      - redis_exporter
+
+  # ✅ Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: workhub_grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - workhub_network
+
 volumes:
   postgres_data:
   redis_data:
+  grafana_data:
 
 networks:
   workhub_network:
