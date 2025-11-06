@@ -1,0 +1,67 @@
+global:
+  # Thời gian chờ trước khi gửi lại alert
+  resolve_timeout: 5m
+  # SMTP config (nếu muốn gửi email)
+  # smtp_smarthost: 'smtp.gmail.com:587'
+  # smtp_from: 'alerts@workhub.com'
+  # smtp_auth_username: 'your-email@gmail.com'
+  # smtp_auth_password: 'your-password'
+
+# Route để định tuyến alerts
+route:
+  # Group alerts theo labels
+  group_by: ['alertname', 'cluster', 'service']
+  # Thời gian chờ trước khi gửi alert mới trong cùng group
+  group_wait: 10s
+  # Thời gian chờ giữa các alerts trong cùng group
+  group_interval: 10s
+  # Thời gian chờ trước khi gửi lại alert đã resolve
+  repeat_interval: 12h
+  # Receiver mặc định
+  receiver: 'default-receiver'
+  
+  # Routes con (có thể tùy chỉnh theo severity)
+  routes:
+    - match:
+        severity: critical
+      receiver: 'critical-receiver'
+      continue: true
+    - match:
+        severity: warning
+      receiver: 'warning-receiver'
+      continue: true
+
+# Receivers - nơi gửi alerts
+receivers:
+  # Receiver mặc định - gửi tất cả alerts vào Telegram qua webhook service
+  - name: 'default-receiver'
+    webhook_configs:
+      - url: 'http://telegram-webhook:5000/webhook'
+        send_resolved: true
+        http_config:
+          follow_redirects: true
+
+  # Receiver cho critical alerts - gửi vào Telegram
+  - name: 'critical-receiver'
+    webhook_configs:
+      - url: 'http://telegram-webhook:5000/webhook'
+        send_resolved: true
+        http_config:
+          follow_redirects: true
+
+  # Receiver cho warning alerts - gửi vào Telegram
+  - name: 'warning-receiver'
+    webhook_configs:
+      - url: 'http://telegram-webhook:5000/webhook'
+        send_resolved: true
+        http_config:
+          follow_redirects: true
+
+# Inhibit rules - ngăn alerts trùng lặp
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'instance']
+
