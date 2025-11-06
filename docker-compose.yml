@@ -27,9 +27,94 @@ services:
     networks:
       - workhub_network
 
+  postgres_exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter
+    container_name: workhub_postgres_exporter
+    restart: always
+    environment:
+      DATA_SOURCE_NAME: "postgresql://user:password@postgres:5432/workhub_db?sslmode=disable"
+    ports:
+      - "9187:9187"
+    depends_on:
+      - postgres
+    networks:
+      - workhub_network
+
+  redis_exporter:
+    image: oliver006/redis_exporter
+    container_name: workhub_redis_exporter
+    restart: always
+    command: ["--redis.addr=redis:6379"]
+    ports:
+      - "9121:9121"
+    depends_on:
+      - redis
+    networks:
+      - workhub_network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: workhub_prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - workhub_network
+    depends_on:
+      - postgres_exporter
+      - redis_exporter
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: workhub_grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - workhub_network
+
+  loki:
+    image: grafana/loki:2.9.3
+    container_name: workhub_loki
+    restart: always
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/config.yml:/etc/loki/config.yml
+      - loki_data:/loki
+    networks:
+      - workhub_network
+
+  promtail:
+    image: grafana/promtail:2.9.3
+    container_name: workhub_promtail
+    restart: always
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./promtail/config.yml:/etc/promtail/config.yml
+      - ./logs:/var/log/workhub:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    networks:
+      - workhub_network
+
+
 volumes:
   postgres_data:
   redis_data:
+  grafana_data:
+  loki_data:
 
 networks:
   workhub_network:
