@@ -255,3 +255,205 @@
 {"level":"INFO","time":"2025-11-06T16:33:42.272+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: 39fb9ef7-538b-4779-9bb6-3876d7005549"}
 {"level":"INFO","time":"2025-11-06T16:33:42.273+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
 {"level":"INFO","time":"2025-11-06T16:33:42.273+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"INFO","time":"2025-11-07T17:02:19.833+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:02:19.849+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:02:19.849+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:02:20.101+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"WARN","time":"2025-11-07T17:02:24.811+0700","caller":"logger/logger.go:41","msg":"router:InitDependencies","msg":"NATS not available: failed to connect to NATS: dial tcp: lookup nats: i/o timeout"}
+{"level":"INFO","time":"2025-11-07T17:02:24.811+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-11-07T17:08:39.332+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:08:39.343+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:08:39.343+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:08:39.513+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"WARN","time":"2025-11-07T17:08:44.230+0700","caller":"logger/logger.go:41","msg":"router:InitDependencies","msg":"NATS not available: failed to connect to NATS: dial tcp: lookup nats: i/o timeout"}
+{"level":"INFO","time":"2025-11-07T17:08:44.234+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-11-07T17:13:24.223+0700","caller":"logger/logger.go:37","msg":"nats:NewClient","msg":"Connected to NATS at nats://localhost:4222"}
+{"level":"INFO","time":"2025-11-07T17:13:24.224+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Subscribed to test.chat"}
+{"level":"INFO","time":"2025-11-07T17:13:24.274+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on test.chat"}
+{"level":"INFO","time":"2025-11-07T17:13:25.225+0700","caller":"logger/logger.go:37","msg":"nats:Close","msg":"NATS connection closed"}
+{"level":"INFO","time":"2025-11-07T17:14:52.392+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:14:52.404+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:14:52.404+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:14:52.571+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"WARN","time":"2025-11-07T17:14:57.274+0700","caller":"logger/logger.go:41","msg":"router:InitDependencies","msg":"NATS not available: failed to connect to NATS: dial tcp: lookup nats: i/o timeout"}
+{"level":"INFO","time":"2025-11-07T17:14:57.278+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-11-07T17:15:15.950+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
+{"level":"INFO","time":"2025-11-07T17:15:15.950+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:15:15.950+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:15:15.954+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy123 (ID: 7003f053-a587-473c-9a18-40163557fba2)"}
+{"level":"INFO","time":"2025-11-07T17:15:16.200+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
+{"level":"INFO","time":"2025-11-07T17:15:16.205+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 7003f053-a587-473c-9a18-40163557fba2"}
+{"level":"INFO","time":"2025-11-07T17:15:16.212+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: 511b99c8-3f2f-4296-a614-2e1027d2fa32"}
+{"level":"INFO","time":"2025-11-07T17:15:16.218+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to DB successfully: 511b99c8-3f2f-4296-a614-2e1027d2fa32"}
+{"level":"INFO","time":"2025-11-07T17:15:16.218+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Saving session to Redis: 511b99c8-3f2f-4296-a614-2e1027d2fa32"}
+{"level":"INFO","time":"2025-11-07T17:15:16.230+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Session saved to Redis successfully: 511b99c8-3f2f-4296-a614-2e1027d2fa32"}
+{"level":"INFO","time":"2025-11-07T17:15:16.232+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: 511b99c8-3f2f-4296-a614-2e1027d2fa32"}
+{"level":"INFO","time":"2025-11-07T17:15:16.233+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
+{"level":"INFO","time":"2025-11-07T17:15:16.233+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"INFO","time":"2025-11-07T17:16:39.113+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:16:39.127+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:16:39.127+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:16:39.441+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"WARN","time":"2025-11-07T17:16:44.158+0700","caller":"logger/logger.go:41","msg":"router:InitDependencies","msg":"NATS not available: failed to connect to NATS: dial tcp: lookup nats: i/o timeout"}
+{"level":"INFO","time":"2025-11-07T17:16:44.159+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"WARN","time":"2025-11-07T17:17:45.211+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Missing Authorization header"}
+{"level":"WARN","time":"2025-11-07T17:17:48.460+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Missing Authorization header"}
+{"level":"WARN","time":"2025-11-07T17:17:55.466+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Missing Authorization header"}
+{"level":"INFO","time":"2025-11-07T17:18:15.392+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
+{"level":"INFO","time":"2025-11-07T17:18:15.394+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:18:15.394+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:18:15.396+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy123 (ID: 7003f053-a587-473c-9a18-40163557fba2)"}
+{"level":"INFO","time":"2025-11-07T17:18:15.643+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
+{"level":"INFO","time":"2025-11-07T17:18:15.648+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 7003f053-a587-473c-9a18-40163557fba2"}
+{"level":"INFO","time":"2025-11-07T17:18:15.652+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: 075bc231-02ee-45c5-891b-5ef2edec6a60"}
+{"level":"INFO","time":"2025-11-07T17:18:15.652+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to DB successfully: 075bc231-02ee-45c5-891b-5ef2edec6a60"}
+{"level":"INFO","time":"2025-11-07T17:18:15.652+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Saving session to Redis: 075bc231-02ee-45c5-891b-5ef2edec6a60"}
+{"level":"INFO","time":"2025-11-07T17:18:15.657+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Session saved to Redis successfully: 075bc231-02ee-45c5-891b-5ef2edec6a60"}
+{"level":"INFO","time":"2025-11-07T17:18:15.657+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: 075bc231-02ee-45c5-891b-5ef2edec6a60"}
+{"level":"INFO","time":"2025-11-07T17:18:15.658+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
+{"level":"INFO","time":"2025-11-07T17:18:15.658+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"WARN","time":"2025-11-07T17:18:25.816+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Missing Authorization header"}
+{"level":"INFO","time":"2025-11-07T17:20:16.460+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:20:16.472+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:20:16.472+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:20:16.687+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"WARN","time":"2025-11-07T17:20:21.395+0700","caller":"logger/logger.go:41","msg":"router:InitDependencies","msg":"NATS not available: failed to connect to NATS: dial tcp: lookup nats: i/o timeout"}
+{"level":"INFO","time":"2025-11-07T17:20:21.396+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+
+
+{"level":"WARN","time":"2025-11-07T17:20:39.308+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Missing token in query parameter for WebSocket"}
+{"level":"INFO","time":"2025-11-07T17:22:07.305+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:22:07.316+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:22:07.317+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:22:07.489+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"WARN","time":"2025-11-07T17:22:12.202+0700","caller":"logger/logger.go:41","msg":"router:InitDependencies","msg":"NATS not available: failed to connect to NATS: dial tcp: lookup nats: i/o timeout"}
+{"level":"INFO","time":"2025-11-07T17:22:12.202+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-11-07T17:22:20.263+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=empty, Path=/api/v1/chat/ws"}
+{"level":"WARN","time":"2025-11-07T17:22:20.264+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Missing token in query parameter for WebSocket"}
+{"level":"INFO","time":"2025-11-07T17:22:37.088+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=empty, Path=/api/v1/chat/ws"}
+{"level":"WARN","time":"2025-11-07T17:22:37.088+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Missing token in query parameter for WebSocket"}
+{"level":"INFO","time":"2025-11-07T17:22:37.577+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=empty, Path=/api/v1/chat/ws"}
+{"level":"WARN","time":"2025-11-07T17:22:37.577+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Missing token in query parameter for WebSocket"}
+{"level":"INFO","time":"2025-11-07T17:24:37.636+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:24:37.649+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:24:37.649+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:24:37.825+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+
+
+
+{"level":"WARN","time":"2025-11-07T17:24:42.527+0700","caller":"logger/logger.go:41","msg":"router:InitDependencies","msg":"NATS not available: failed to connect to NATS: dial tcp: lookup nats: i/o timeout"}
+{"level":"INFO","time":"2025-11-07T17:24:42.528+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+
+{"level":"INFO","time":"2025-11-07T17:25:02.508+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=present (length: 524), Path=/api/v1/chat/ws"}
+{"level":"INFO","time":"2025-11-07T17:25:02.509+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:25:02.509+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection attempt from ::1"}
+{"level":"INFO","time":"2025-11-07T17:25:02.509+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection upgraded successfully"}
+{"level":"INFO","time":"2025-11-07T17:25:39.238+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=present (length: 524), Path=/api/v1/chat/ws"}
+{"level":"INFO","time":"2025-11-07T17:25:39.238+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:25:39.238+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection attempt from ::1"}
+{"level":"INFO","time":"2025-11-07T17:25:39.238+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection upgraded successfully"}
+{"level":"INFO","time":"2025-11-07T17:27:04.895+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:27:04.909+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:27:04.909+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:27:05.179+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"WARN","time":"2025-11-07T17:27:09.878+0700","caller":"logger/logger.go:41","msg":"router:InitDependencies","msg":"NATS not available: failed to connect to NATS: dial tcp: lookup nats: i/o timeout"}
+{"level":"INFO","time":"2025-11-07T17:27:09.878+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-11-07T17:27:33.651+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=present (length: 524), RawQuery=room_id=test123&token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjI1MTQyOTUsImlzcyI6IldvcmtIdWIiLCJVc2VySW5mbyI6eyJ1c2VybmFtZSI6InRlZGR5MTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUxMjMuY29tIn0sIlR5cGUiOjF9.JPbnK0ggBv4Vm3IsGI89VDGihKPcz4DiNlJzFzzHhrgKjE0xE_KBUdpHM8weCB7OnX-K1FEvyvU0wD75oXWq7kbPYc3AxXxH7Va8Wxe7y-Suco0KIRgVJynVmJE3hC45apYINf-7-IA_lF9YPHhjuZvonOicVYSsU7nkGygeUs7PDBsPwZNUzaBRI3a2SlwEKDSUy1wZAOhZGDU4bv7cyrZnnJ0JvDQjRkT2MQyRo3QhIOb4o9bghSB2Itir17o2hVCjMesKpKOiVbYEJUQ66xpMxxzfN3lQ5sQZaOj8R3a7DzsRfn2Tfap5INUtTtgpUzwJJSUdp0kj1lBNEVbong, Path=/api/v1/chat/ws"}
+{"level":"INFO","time":"2025-11-07T17:27:33.652+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Using token from query parameter (length: 524)"}
+{"level":"INFO","time":"2025-11-07T17:27:33.652+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:27:33.653+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection attempt from ::1"}
+{"level":"INFO","time":"2025-11-07T17:27:33.653+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection upgraded successfully"}
+{"level":"INFO","time":"2025-11-07T17:28:04.592+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
+{"level":"INFO","time":"2025-11-07T17:28:04.594+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:28:04.594+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:28:04.599+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy123 (ID: 7003f053-a587-473c-9a18-40163557fba2)"}
+{"level":"INFO","time":"2025-11-07T17:28:04.844+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
+{"level":"INFO","time":"2025-11-07T17:28:04.851+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 7003f053-a587-473c-9a18-40163557fba2"}
+{"level":"INFO","time":"2025-11-07T17:28:04.857+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: 9713e295-1dd9-47fa-9775-1d3f50ecf022"}
+{"level":"INFO","time":"2025-11-07T17:28:04.857+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to DB successfully: 9713e295-1dd9-47fa-9775-1d3f50ecf022"}
+{"level":"INFO","time":"2025-11-07T17:28:04.858+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Saving session to Redis: 9713e295-1dd9-47fa-9775-1d3f50ecf022"}
+{"level":"INFO","time":"2025-11-07T17:28:04.863+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Session saved to Redis successfully: 9713e295-1dd9-47fa-9775-1d3f50ecf022"}
+{"level":"INFO","time":"2025-11-07T17:28:04.863+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: 9713e295-1dd9-47fa-9775-1d3f50ecf022"}
+{"level":"INFO","time":"2025-11-07T17:28:04.864+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
+{"level":"INFO","time":"2025-11-07T17:28:04.864+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"INFO","time":"2025-11-07T17:28:12.468+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=present (length: 524), RawQuery=room_id=test123&token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjI1MTQ4ODQsImlzcyI6IldvcmtIdWIiLCJVc2VySW5mbyI6eyJ1c2VybmFtZSI6InRlZGR5MTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUxMjMuY29tIn0sIlR5cGUiOjF9.XN_y0rvIxoOZ6P5ldDmYqChTA3mNsgk3OAdTPp0VHZh8AgTF73cqKBTiJpuvoSPFMU_vAVFZQhX1p0zTsH6SHKvnOoRYq0mucyVY0R_tRUjEXYXH3TmEQfNC4kcDEwF6MM3AhoV0hS0J523sZwMl9qoC-eSVYMMeIBz3YvGKw07G0dC4X9GpOmsyvyAwZNGlCtcAaVl2Wy6KWEwGO0_-RqW5DKENm4qFwXxC5JhOgbov8wBKwKfaFqyGjXh3t4A7LD9v-I1g3018xxi4OMLARmqV0cwYltiXkVPJGJfkAQjeAUz5rC-XBYK7H_UFvmVgaJOmCVXl34pU32W_-LP0JA, Path=/api/v1/chat/ws"}
+{"level":"INFO","time":"2025-11-07T17:28:12.468+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Using token from query parameter (length: 524)"}
+{"level":"INFO","time":"2025-11-07T17:28:12.468+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:28:12.468+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection attempt from ::1"}
+{"level":"INFO","time":"2025-11-07T17:28:12.469+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection upgraded successfully"}
+{"level":"INFO","time":"2025-11-07T17:28:21.504+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=present (length: 524), RawQuery=room_id=test123&token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjI1MTQ4ODQsImlzcyI6IldvcmtIdWIiLCJVc2VySW5mbyI6eyJ1c2VybmFtZSI6InRlZGR5MTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUxMjMuY29tIn0sIlR5cGUiOjF9.XN_y0rvIxoOZ6P5ldDmYqChTA3mNsgk3OAdTPp0VHZh8AgTF73cqKBTiJpuvoSPFMU_vAVFZQhX1p0zTsH6SHKvnOoRYq0mucyVY0R_tRUjEXYXH3TmEQfNC4kcDEwF6MM3AhoV0hS0J523sZwMl9qoC-eSVYMMeIBz3YvGKw07G0dC4X9GpOmsyvyAwZNGlCtcAaVl2Wy6KWEwGO0_-RqW5DKENm4qFwXxC5JhOgbov8wBKwKfaFqyGjXh3t4A7LD9v-I1g3018xxi4OMLARmqV0cwYltiXkVPJGJfkAQjeAUz5rC-XBYK7H_UFvmVgaJOmCVXl34pU32W_-LP0JA, Path=/api/v1/chat/ws"}
+{"level":"INFO","time":"2025-11-07T17:28:21.504+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Using token from query parameter (length: 524)"}
+{"level":"INFO","time":"2025-11-07T17:28:21.504+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:28:21.504+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection attempt from ::1"}
+{"level":"INFO","time":"2025-11-07T17:28:21.505+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection upgraded successfully"}
+
+
+{"level":"INFO","time":"2025-11-07T17:28:52.751+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=present (length: 524), RawQuery=room_id=test123&token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjI1MTQ4ODQsImlzcyI6IldvcmtIdWIiLCJVc2VySW5mbyI6eyJ1c2VybmFtZSI6InRlZGR5MTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUxMjMuY29tIn0sIlR5cGUiOjF9.XN_y0rvIxoOZ6P5ldDmYqChTA3mNsgk3OAdTPp0VHZh8AgTF73cqKBTiJpuvoSPFMU_vAVFZQhX1p0zTsH6SHKvnOoRYq0mucyVY0R_tRUjEXYXH3TmEQfNC4kcDEwF6MM3AhoV0hS0J523sZwMl9qoC-eSVYMMeIBz3YvGKw07G0dC4X9GpOmsyvyAwZNGlCtcAaVl2Wy6KWEwGO0_-RqW5DKENm4qFwXxC5JhOgbov8wBKwKfaFqyGjXh3t4A7LD9v-I1g3018xxi4OMLARmqV0cwYltiXkVPJGJfkAQjeAUz5rC-XBYK7H_UFvmVgaJOmCVXl34pU32W_-LP0JA, Path=/api/v1/chat/ws"}
+{"level":"INFO","time":"2025-11-07T17:28:52.751+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Using token from query parameter (length: 524)"}
+{"level":"INFO","time":"2025-11-07T17:28:52.752+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:28:52.752+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection attempt from ::1"}
+{"level":"INFO","time":"2025-11-07T17:28:52.752+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection upgraded successfully"}
+{"level":"INFO","time":"2025-11-07T17:31:57.762+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:31:57.790+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:31:57.790+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:31:58.221+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"WARN","time":"2025-11-07T17:32:02.922+0700","caller":"logger/logger.go:41","msg":"router:InitDependencies","msg":"NATS not available: failed to connect to NATS: dial tcp: lookup nats: i/o timeout"}
+{"level":"INFO","time":"2025-11-07T17:32:02.925+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-11-07T17:32:23.217+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=present (length: 524), RawQuery=room_id=test123&token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjI1MTQ4ODQsImlzcyI6IldvcmtIdWIiLCJVc2VySW5mbyI6eyJ1c2VybmFtZSI6InRlZGR5MTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUxMjMuY29tIn0sIlR5cGUiOjF9.XN_y0rvIxoOZ6P5ldDmYqChTA3mNsgk3OAdTPp0VHZh8AgTF73cqKBTiJpuvoSPFMU_vAVFZQhX1p0zTsH6SHKvnOoRYq0mucyVY0R_tRUjEXYXH3TmEQfNC4kcDEwF6MM3AhoV0hS0J523sZwMl9qoC-eSVYMMeIBz3YvGKw07G0dC4X9GpOmsyvyAwZNGlCtcAaVl2Wy6KWEwGO0_-RqW5DKENm4qFwXxC5JhOgbov8wBKwKfaFqyGjXh3t4A7LD9v-I1g3018xxi4OMLARmqV0cwYltiXkVPJGJfkAQjeAUz5rC-XBYK7H_UFvmVgaJOmCVXl34pU32W_-LP0JA, Path=/api/v1/chat/ws"}
+{"level":"INFO","time":"2025-11-07T17:32:23.217+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Using token from query parameter (length: 524)"}
+{"level":"INFO","time":"2025-11-07T17:32:23.217+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example123.com (ID: 0)"}
+{"level":"INFO","time":"2025-11-07T17:32:23.218+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection attempt from ::1"}
+{"level":"INFO","time":"2025-11-07T17:32:23.218+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection upgraded successfully"}
+{"level":"INFO","time":"2025-11-07T17:32:23.218+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"Context: user_id exists=true, user_id=0, username=teddy123, email=test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:32:23.219+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"Using email as user_id: test@example123.com"}
+{"level":"ERROR","time":"2025-11-07T17:32:23.219+0700","caller":"logger/logger.go:45","msg":"chat:HandleWebSocket","msg":"NATS client not initialized","stacktrace":"workHub/logger.Error\n\tD:/here/workHub/logger/logger.go:45\nworkHub/internal/handler.(*ChatHandler).HandleWebSocket\n\tD:/here/workHub/internal/handler/chat_handler.go:88\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\nworkHub/router.InitRouter.AuthMiddleware.func3\n\tD:/here/workHub/middleware/auth_middleware.go:140\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.CustomRecoveryWithWriter.func1\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/recovery.go:92\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.LoggerWithConfig.func1\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/logger.go:249\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/gin.go:689\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/gin.go:643\nnet/http.serverHandler.ServeHTTP\n\tC:/Program Files/Go/src/net/http/server.go:3301\nnet/http.(*conn).serve\n\tC:/Program Files/Go/src/net/http/server.go:2102"}
+{"level":"INFO","time":"2025-11-07T17:34:03.516+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-11-07T17:34:03.529+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-11-07T17:34:03.529+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-11-07T17:34:03.718+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated"}
+{"level":"INFO","time":"2025-11-07T17:34:03.719+0700","caller":"logger/logger.go:37","msg":"router:InitDependencies","msg":"Trying to connect to NATS at localhost:4222"}
+{"level":"INFO","time":"2025-11-07T17:34:03.746+0700","caller":"logger/logger.go:37","msg":"nats:NewClient","msg":"Connected to NATS at nats://localhost:4222"}
+{"level":"INFO","time":"2025-11-07T17:34:03.746+0700","caller":"logger/logger.go:37","msg":"router:InitDependencies","msg":"Connected to NATS at nats://localhost:4222"}
+{"level":"INFO","time":"2025-11-07T17:34:03.747+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-11-07T17:34:24.886+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=present (length: 524), RawQuery=room_id=test123&token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjI1MTQ4ODQsImlzcyI6IldvcmtIdWIiLCJVc2VySW5mbyI6eyJ1c2VybmFtZSI6InRlZGR5MTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUxMjMuY29tIn0sIlR5cGUiOjF9.XN_y0rvIxoOZ6P5ldDmYqChTA3mNsgk3OAdTPp0VHZh8AgTF73cqKBTiJpuvoSPFMU_vAVFZQhX1p0zTsH6SHKvnOoRYq0mucyVY0R_tRUjEXYXH3TmEQfNC4kcDEwF6MM3AhoV0hS0J523sZwMl9qoC-eSVYMMeIBz3YvGKw07G0dC4X9GpOmsyvyAwZNGlCtcAaVl2Wy6KWEwGO0_-RqW5DKENm4qFwXxC5JhOgbov8wBKwKfaFqyGjXh3t4A7LD9v-I1g3018xxi4OMLARmqV0cwYltiXkVPJGJfkAQjeAUz5rC-XBYK7H_UFvmVgaJOmCVXl34pU32W_-LP0JA, Path=/api/v1/chat/ws"}
+{"level":"INFO","time":"2025-11-07T17:34:24.886+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Using token from query parameter (length: 524)"}
+{"level":"INFO","time":"2025-11-07T17:34:24.886+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example123.com (ID: 0)"}
+{"level":"INFO","time":"2025-11-07T17:34:24.887+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection attempt from ::1"}
+{"level":"INFO","time":"2025-11-07T17:34:24.887+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection upgraded successfully"}
+{"level":"INFO","time":"2025-11-07T17:34:24.887+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"Context: user_id exists=true, user_id=0, username=teddy123, email=test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:34:24.888+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"Using email as user_id: test@example123.com"}
+{"level":"INFO","time":"2025-11-07T17:34:24.888+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"User test@example123.com connected to room test123"}
+{"level":"INFO","time":"2025-11-07T17:34:24.888+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Subscribed to chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:34:24.888+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Subscribed to chat.typing.test123"}
+{"level":"INFO","time":"2025-11-07T17:34:33.245+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:35:31.667+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
+{"level":"INFO","time":"2025-11-07T17:35:31.667+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example.com"}
+{"level":"INFO","time":"2025-11-07T17:35:31.667+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example.com"}
+{"level":"INFO","time":"2025-11-07T17:35:31.670+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy (ID: 5cb803f9-8ebb-4458-bedc-615f1548ab0e)"}
+{"level":"INFO","time":"2025-11-07T17:35:31.730+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
+{"level":"INFO","time":"2025-11-07T17:35:31.734+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 5cb803f9-8ebb-4458-bedc-615f1548ab0e"}
+{"level":"INFO","time":"2025-11-07T17:35:31.738+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: 88fdba1b-2ff6-4fbb-bd61-189bb4a2e4c8"}
+{"level":"INFO","time":"2025-11-07T17:35:31.738+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to DB successfully: 88fdba1b-2ff6-4fbb-bd61-189bb4a2e4c8"}
+{"level":"INFO","time":"2025-11-07T17:35:31.739+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Saving session to Redis: 88fdba1b-2ff6-4fbb-bd61-189bb4a2e4c8"}
+{"level":"INFO","time":"2025-11-07T17:35:31.744+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Session saved to Redis successfully: 88fdba1b-2ff6-4fbb-bd61-189bb4a2e4c8"}
+{"level":"INFO","time":"2025-11-07T17:35:31.746+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: 88fdba1b-2ff6-4fbb-bd61-189bb4a2e4c8"}
+{"level":"INFO","time":"2025-11-07T17:35:31.746+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
+{"level":"INFO","time":"2025-11-07T17:35:31.747+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"INFO","time":"2025-11-07T17:35:42.451+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Request: Upgrade=websocket, TokenFromQuery=present (length: 516), RawQuery=room_id=test123&token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjI1MTUzMzEsImlzcyI6IldvcmtIdWIiLCJVc2VySW5mbyI6eyJ1c2VybmFtZSI6InRlZGR5IiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIn0sIlR5cGUiOjF9.Sqq3D2TwZvaQcqiKelco4VrSukLD8VIkXh6Wpj6ajUNPQySkTCjt8tmqw2s3eP9ATfgCUvOkSaDo1-AUKO8A0UGl1pN2yoCh-5DV-ho7jE52c31axW2gn4q_Eqcmf9h2S5V65Jtg5xL46FsSF5hOEekO5iDLsillmHUn8CJNTnXqK5x25a5_Xwj9vybgTUPVRPlediTK8pjI9AR7SWk_nVbmR9kgu1KX2TGFFK-261IF5iMAOwy_2rqQ-x0ZgYDgfgl-QRffrlsodMEn7PFN2wHO3Cew98HpD1IBN_OlHkn5vL3KRkEz-d7q2VsSP6XKBu7nJppc9YNluMz4HtIhUw, Path=/api/v1/chat/ws"}
+{"level":"INFO","time":"2025-11-07T17:35:42.452+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"Using token from query parameter (length: 516)"}
+{"level":"INFO","time":"2025-11-07T17:35:42.452+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com (ID: 0)"}
+{"level":"INFO","time":"2025-11-07T17:35:42.452+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection attempt from 127.0.0.1"}
+{"level":"INFO","time":"2025-11-07T17:35:42.452+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"WebSocket connection upgraded successfully"}
+{"level":"INFO","time":"2025-11-07T17:35:42.453+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"Context: user_id exists=true, user_id=0, username=teddy, email=test@example.com"}
+{"level":"INFO","time":"2025-11-07T17:35:42.453+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"Using email as user_id: test@example.com"}
+{"level":"INFO","time":"2025-11-07T17:35:42.453+0700","caller":"logger/logger.go:37","msg":"chat:HandleWebSocket","msg":"User test@example.com connected to room test123"}
+{"level":"INFO","time":"2025-11-07T17:35:42.453+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Subscribed to chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:35:42.453+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Subscribed to chat.typing.test123"}
+{"level":"INFO","time":"2025-11-07T17:35:50.690+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:35:50.690+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:35:55.303+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:35:55.303+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:36:09.804+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:36:09.804+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:36:12.382+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on chat.message.test123"}
+{"level":"INFO","time":"2025-11-07T17:36:12.382+0700","caller":"logger/logger.go:37","msg":"nats:Subscribe","msg":"Received message on chat.message.test123"}
