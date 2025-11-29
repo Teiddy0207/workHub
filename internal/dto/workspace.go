@@ -11,7 +11,6 @@ type WorkspaceRequest struct {
 	BaseRequest
 	Name        string          `json:"name"`
 	Description string          `json:"description"`
-	OwnerID     uuid.UUID       `json:"owner_id"`
 	AvatarURL   string          `json:"avatar_url"`
 	IsPublic    bool            `json:"is_public"`
 	Setting     json.RawMessage `json:"setting"`

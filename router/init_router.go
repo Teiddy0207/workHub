@@ -40,7 +40,7 @@ func InitDependencies(db *gorm.DB) (*Dependencies, error) {
 	permissionController := controller.NewPermissionController(permissionService)
 
 	workspaceRepo := repository.NewWorkspaceRepository(db)
-	workspaceService := service.NewWorkspaceService(workspaceRepo)
+	workspaceService := service.NewWorkspaceService(workspaceRepo, authRepo)
 	workspaceController := controller.NewWorkspaceController(workspaceService)
 
 	return &Dependencies{

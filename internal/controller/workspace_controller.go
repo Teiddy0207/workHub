@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"workHub/constant"
+	"workHub/helper"
 	"workHub/internal/dto"
 	"workHub/internal/service"
 	"workHub/logger"
@@ -28,6 +29,14 @@ func (w *WorkspaceController) CreateWorkspace(c *gin.Context) {
 	logger.Info("controller", "CreateWorkspace", "CreateWorkspace controller called")
 	ctx := c.Request.Context()
 
+	// Lấy email từ token trong header (helper function parse token)
+	userEmail, err := helper.GetUserEmailFromToken(c)
+	if err != nil {
+		logger.Error("controller", "CreateWorkspace", fmt.Sprintf("Failed to get user email from token: %v", err))
+		w.BaseHandler.BadRequest(c, "Unauthorized: Invalid token")
+		return
+	}
+
 	var req dto.WorkspaceRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		logger.Error("controller", "CreateWorkspace", fmt.Sprintf("Bind JSON error: %v", err))
@@ -35,7 +44,10 @@ func (w *WorkspaceController) CreateWorkspace(c *gin.Context) {
 		return
 	}
 
-	response, err := w.service.CreateWorkspace(ctx, req)
+	logger.Info("controller", "CreateWorkspace", fmt.Sprintf("Request received: name=%s, user_email=%s", req.Name, userEmail))
+
+	// Truyền email xuống service để service tự query database và set owner_id
+	response, err := w.service.CreateWorkspace(ctx, req, userEmail)
 	if err != nil {
 		logger.Error("controller", "CreateWorkspace", fmt.Sprintf("Service error: %v", err))
 		if errors.Is(err, constant.ErrNotFound) {

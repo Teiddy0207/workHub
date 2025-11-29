@@ -8,11 +8,9 @@ import (
 	"github.com/google/uuid"
 )
 
-// ToWorkspaceEntity chuyển đổi dto.WorkspaceRequest thành entity.Workspace
 func ToWorkspaceEntity(req dto.WorkspaceRequest) entity.Workspace {
 	now := time.Now()
 
-	// Set default values nếu cần
 	setting := req.Setting
 	if len(setting) == 0 {
 		setting = []byte("{}")
@@ -22,7 +20,7 @@ func ToWorkspaceEntity(req dto.WorkspaceRequest) entity.Workspace {
 		ID:          uuid.New().String(),
 		Name:        req.Name,
 		Description: req.Description,
-		OwnerID:     req.OwnerID.String(),
+		OwnerID:     req.UserID.String(),
 		AvatarURL:   req.AvatarURL,
 		IsPublic:    req.IsPublic,
 		Setting:     setting,
@@ -31,7 +29,6 @@ func ToWorkspaceEntity(req dto.WorkspaceRequest) entity.Workspace {
 	}
 }
 
-// ToWorkspaceResponse chuyển đổi entity.Workspace thành dto.WorkspaceResponse
 func ToWorkspaceResponse(workspace entity.Workspace) dto.WorkspaceResponse {
 	ownerID, _ := uuid.Parse(workspace.OwnerID)
 	workspaceID, _ := uuid.Parse(workspace.ID)
