@@ -47,6 +47,7 @@ func AutoMigrate(db *gorm.DB) error {
 		&entity.Role{},
 		&entity.Permission{},
 		&entity.Session{},
+		&entity.Workspace{},
 	)
 	if err != nil {
 		logger.Error("config", "AutoMigrate", fmt.Sprintf("Migration failed (base tables): %v", err))
@@ -92,6 +93,6 @@ func AutoMigrate(db *gorm.DB) error {
 		return fmt.Errorf("failed to auto migrate junction tables: %w", err)
 	}
 	
-	logger.Info("config", "AutoMigrate", "Database migration completed: roles, users, sessions, permissions, role_permissions, user_roles tables created/updated")
+	logger.Info("config", "AutoMigrate", "Database migration completed: roles, users, sessions, permissions, workspaces, role_permissions, user_roles tables created/updated")
 	return nil
 }
