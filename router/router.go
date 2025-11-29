@@ -51,6 +51,11 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 			permissions.PUT("/:id", deps.PermissionController.UpdatePermission)
 			permissions.DELETE("/:id", deps.PermissionController.DeletePermission)
 		}
+
+		workspaces := protected.Group("/workspaces")
+		{
+			workspaces.POST("", deps.WorkspaceController.CreateWorkspace)
+		}
 	}
 
 	return r

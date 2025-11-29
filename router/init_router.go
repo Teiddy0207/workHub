@@ -14,6 +14,7 @@ type Dependencies struct {
 	AuthController     *controller.AuthController
 	RoleController     *controller.RoleController
 	PermissionController *controller.PermissionController
+	WorkspaceController *controller.WorkspaceController
 	PermissionRepo     repository.PermissionRepository
 }
 
@@ -38,11 +39,16 @@ func InitDependencies(db *gorm.DB) (*Dependencies, error) {
 	permissionService := service.NewPermissionService(permissionRepo, roleRepo)
 	permissionController := controller.NewPermissionController(permissionService)
 
+	workspaceRepo := repository.NewWorkspaceRepository(db)
+	workspaceService := service.NewWorkspaceService(workspaceRepo)
+	workspaceController := controller.NewWorkspaceController(workspaceService)
+
 	return &Dependencies{
 		PublicKey:           jwtConfig.PublicKey,
 		AuthController:      authController,
 		RoleController:      roleController,
 		PermissionController: permissionController,
+		WorkspaceController: workspaceController,
 		PermissionRepo:       permissionRepo,
 	}, nil
 }
