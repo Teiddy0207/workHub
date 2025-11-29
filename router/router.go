@@ -55,6 +55,10 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 		workspaces := protected.Group("/workspaces")
 		{
 			workspaces.POST("", deps.WorkspaceController.CreateWorkspace)
+			workspaces.GET("", deps.WorkspaceController.ListWorkspaces)
+			workspaces.GET("/:id", deps.WorkspaceController.GetWorkspaceByID)
+			workspaces.PUT("/:id", deps.WorkspaceController.UpdateWorkspace)
+			workspaces.DELETE("/:id", deps.WorkspaceController.DeleteWorkspace)
 		}
 	}
 

@@ -16,6 +16,14 @@ type WorkspaceRequest struct {
 	Setting     json.RawMessage `json:"setting"`
 }
 
+type WorkspaceUpdateRequest struct {
+	Name        *string         `json:"name" binding:"omitempty,min=1,max=255"`
+	Description *string         `json:"description" binding:"omitempty,max=1000"`
+	AvatarURL   *string         `json:"avatar_url"`
+	IsPublic    *bool           `json:"is_public"`
+	Setting     json.RawMessage `json:"setting"`
+}
+
 type WorkspaceResponse struct {
 	ID          uuid.UUID       `json:"id"`
 	Name        string          `json:"name"`
