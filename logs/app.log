@@ -1,107 +1,21 @@
-{"level":"ERROR","time":"2025-11-29T11:21:38.219+0700","caller":"logger/logger.go:45","msg":"jwt:VerifyToken","msg":"JWT validation error: token is expired by 12m56s","stacktrace":"workHub/logger.Error\n\tD:/here/workHub/logger/logger.go:45\nworkHub/pkg/jwt.VerifyToken\n\tD:/here/workHub/pkg/jwt/vertify.go:25\nworkHub/router.InitRouter.AuthMiddleware.func1\n\tD:/here/workHub/middleware/auth_middleware.go:48\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.CustomRecoveryWithWriter.func1\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/recovery.go:92\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.LoggerWithConfig.func1\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/logger.go:249\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/gin.go:689\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/gin.go:643\nnet/http.serverHandler.ServeHTTP\n\tC:/Program Files/Go/src/net/http/server.go:3301\nnet/http.(*conn).serve\n\tC:/Program Files/Go/src/net/http/server.go:2102"}
-{"level":"WARN","time":"2025-11-29T11:21:38.220+0700","caller":"logger/logger.go:41","msg":"jwt:VerifyToken","msg":"Token expired"}
-{"level":"WARN","time":"2025-11-29T11:21:38.220+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Token verification failed: un authentication"}
-{"level":"INFO","time":"2025-11-29T11:21:49.682+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
-{"level":"INFO","time":"2025-11-29T11:21:49.682+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:21:49.682+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:21:49.685+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy (ID: 5cb803f9-8ebb-4458-bedc-615f1548ab0e)"}
-{"level":"INFO","time":"2025-11-29T11:21:49.750+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
-{"level":"INFO","time":"2025-11-29T11:21:49.754+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 5cb803f9-8ebb-4458-bedc-615f1548ab0e"}
-{"level":"INFO","time":"2025-11-29T11:21:49.759+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: e4d2b82b-1756-424f-9d5c-82ef01c9aef2"}
-{"level":"INFO","time":"2025-11-29T11:21:49.760+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to DB successfully: e4d2b82b-1756-424f-9d5c-82ef01c9aef2"}
-{"level":"INFO","time":"2025-11-29T11:21:49.760+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Saving session to Redis: e4d2b82b-1756-424f-9d5c-82ef01c9aef2"}
-{"level":"INFO","time":"2025-11-29T11:21:49.763+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Session saved to Redis successfully: e4d2b82b-1756-424f-9d5c-82ef01c9aef2"}
-{"level":"INFO","time":"2025-11-29T11:21:49.763+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: e4d2b82b-1756-424f-9d5c-82ef01c9aef2"}
-{"level":"INFO","time":"2025-11-29T11:21:49.763+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
-{"level":"INFO","time":"2025-11-29T11:21:49.764+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
-{"level":"INFO","time":"2025-11-29T11:22:01.205+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:22:01.205+0700","caller":"logger/logger.go:37","msg":"controller:CreateWorkspace","msg":"CreateWorkspace controller called"}
-{"level":"INFO","time":"2025-11-29T11:22:01.210+0700","caller":"logger/logger.go:37","msg":"controller:CreateWorkspace","msg":"Request received: name=My Workspace 2, owner_id=5cb803f9-8ebb-4458-bedc-615f1548ab0e"}
-{"level":"INFO","time":"2025-11-29T11:22:01.210+0700","caller":"logger/logger.go:37","msg":"service:CreateWorkspace","msg":"Creating new workspace: My Workspace 2"}
-{"level":"INFO","time":"2025-11-29T11:22:01.211+0700","caller":"logger/logger.go:37","msg":"repository:CreateWorkspace","msg":"Creating workspace: My Workspace 2"}
-{"level":"INFO","time":"2025-11-29T11:22:01.214+0700","caller":"logger/logger.go:37","msg":"repository:CreateWorkspace","msg":"Workspace created successfully: f7505a0a-24ad-43bc-95c2-f02b1d0e4634"}
-{"level":"INFO","time":"2025-11-29T11:22:01.215+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Getting workspace by ID: f7505a0a-24ad-43bc-95c2-f02b1d0e4634"}
-{"level":"INFO","time":"2025-11-29T11:22:01.220+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Workspace found: My Workspace 2"}
-{"level":"INFO","time":"2025-11-29T11:22:01.220+0700","caller":"logger/logger.go:37","msg":"service:CreateWorkspace","msg":"Workspace created successfully: My Workspace 2"}
-{"level":"INFO","time":"2025-11-29T11:22:01.220+0700","caller":"logger/logger.go:37","msg":"controller:CreateWorkspace","msg":"Workspace created successfully"}
-{"level":"INFO","time":"2025-11-29T11:33:11.126+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
-{"level":"INFO","time":"2025-11-29T11:33:11.138+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
-{"level":"INFO","time":"2025-11-29T11:33:11.138+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
-{"level":"INFO","time":"2025-11-29T11:33:11.332+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, workspaces, role_permissions, user_roles tables created/updated"}
-{"level":"INFO","time":"2025-11-29T11:33:11.334+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
-{"level":"INFO","time":"2025-11-29T11:33:37.466+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:33:37.466+0700","caller":"logger/logger.go:37","msg":"controller:CreateWorkspace","msg":"CreateWorkspace controller called"}
-{"level":"INFO","time":"2025-11-29T11:33:37.467+0700","caller":"logger/logger.go:37","msg":"controller:CreateWorkspace","msg":"Request received: name=My Workspace 3, user_email=test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:33:37.467+0700","caller":"logger/logger.go:37","msg":"service:CreateWorkspace","msg":"Creating new workspace: My Workspace 3 for user: test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:33:37.472+0700","caller":"logger/logger.go:37","msg":"repository:CreateWorkspace","msg":"Creating workspace: My Workspace 3"}
-{"level":"INFO","time":"2025-11-29T11:33:37.480+0700","caller":"logger/logger.go:37","msg":"repository:CreateWorkspace","msg":"Workspace created successfully: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:33:37.480+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Getting workspace by ID: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:33:37.481+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Workspace found: My Workspace 3"}
-{"level":"INFO","time":"2025-11-29T11:33:37.482+0700","caller":"logger/logger.go:37","msg":"service:CreateWorkspace","msg":"Workspace created successfully: My Workspace 3"}
-{"level":"INFO","time":"2025-11-29T11:33:37.482+0700","caller":"logger/logger.go:37","msg":"controller:CreateWorkspace","msg":"Workspace created successfully"}
-{"level":"INFO","time":"2025-11-29T11:40:01.298+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
-{"level":"INFO","time":"2025-11-29T11:40:01.311+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
-{"level":"INFO","time":"2025-11-29T11:40:01.311+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
-{"level":"INFO","time":"2025-11-29T11:40:01.503+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, workspaces, role_permissions, user_roles tables created/updated"}
-{"level":"INFO","time":"2025-11-29T11:40:01.504+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
-{"level":"INFO","time":"2025-11-29T11:40:21.099+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:40:21.100+0700","caller":"logger/logger.go:37","msg":"controller:ListWorkspaces","msg":"ListWorkspaces controller called"}
-{"level":"INFO","time":"2025-11-29T11:40:21.100+0700","caller":"logger/logger.go:37","msg":"controller:ListWorkspaces","msg":"Query params: page=1, size=10, search="}
-{"level":"INFO","time":"2025-11-29T11:40:21.100+0700","caller":"logger/logger.go:37","msg":"service:ListWorkspaces","msg":"Listing workspaces with params: page=1, size=10, search="}
-{"level":"INFO","time":"2025-11-29T11:40:21.100+0700","caller":"logger/logger.go:37","msg":"repository:ListWorkspaces","msg":"Listing workspaces with params: page=1, size=10, search="}
-{"level":"INFO","time":"2025-11-29T11:40:21.104+0700","caller":"logger/logger.go:37","msg":"repository:ListWorkspaces","msg":"Found 3 workspaces (total: 3)"}
-{"level":"INFO","time":"2025-11-29T11:40:21.104+0700","caller":"logger/logger.go:37","msg":"service:ListWorkspaces","msg":"Listed 3 workspaces successfully"}
-{"level":"INFO","time":"2025-11-29T11:40:21.104+0700","caller":"logger/logger.go:37","msg":"controller:ListWorkspaces","msg":"Workspaces listed successfully"}
-{"level":"INFO","time":"2025-11-29T11:40:58.539+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:40:58.540+0700","caller":"logger/logger.go:37","msg":"controller:GetWorkspaceByID","msg":"GetWorkspaceByID controller called"}
-{"level":"INFO","time":"2025-11-29T11:40:58.540+0700","caller":"logger/logger.go:37","msg":"controller:GetWorkspaceByID","msg":"Getting workspace with ID: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:40:58.540+0700","caller":"logger/logger.go:37","msg":"service:GetWorkspaceByID","msg":"Getting workspace by ID: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:40:58.541+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Getting workspace by ID: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:40:58.544+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Workspace found: My Workspace 3"}
-{"level":"INFO","time":"2025-11-29T11:40:58.544+0700","caller":"logger/logger.go:37","msg":"service:GetWorkspaceByID","msg":"Workspace found: My Workspace 3"}
-{"level":"INFO","time":"2025-11-29T11:40:58.544+0700","caller":"logger/logger.go:37","msg":"controller:GetWorkspaceByID","msg":"Workspace retrieved successfully"}
-{"level":"INFO","time":"2025-11-29T11:41:17.463+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:41:17.464+0700","caller":"logger/logger.go:37","msg":"controller:DeleteWorkspace","msg":"DeleteWorkspace controller called"}
-{"level":"INFO","time":"2025-11-29T11:41:17.464+0700","caller":"logger/logger.go:37","msg":"controller:DeleteWorkspace","msg":"Deleting workspace with ID: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:41:17.464+0700","caller":"logger/logger.go:37","msg":"service:DeleteWorkspace","msg":"Deleting workspace: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:41:17.464+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Getting workspace by ID: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:41:17.466+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Workspace found: My Workspace 3"}
-{"level":"INFO","time":"2025-11-29T11:41:17.466+0700","caller":"logger/logger.go:37","msg":"repository:DeleteWorkspace","msg":"Hard deleting workspace: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:41:17.470+0700","caller":"logger/logger.go:37","msg":"repository:DeleteWorkspace","msg":"Workspace deleted successfully: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:41:17.472+0700","caller":"logger/logger.go:37","msg":"service:DeleteWorkspace","msg":"Workspace deleted successfully: b5b9ca12-c818-48f4-8d8c-5be89076a3ab"}
-{"level":"INFO","time":"2025-11-29T11:41:17.472+0700","caller":"logger/logger.go:37","msg":"controller:DeleteWorkspace","msg":"Workspace deleted successfully"}
-{"level":"INFO","time":"2025-11-29T11:42:18.222+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com"}
-{"level":"INFO","time":"2025-11-29T11:42:18.222+0700","caller":"logger/logger.go:37","msg":"controller:UpdateWorkspace","msg":"UpdateWorkspace controller called"}
-{"level":"INFO","time":"2025-11-29T11:42:18.222+0700","caller":"logger/logger.go:37","msg":"controller:UpdateWorkspace","msg":"Updating workspace with ID: f7505a0a-24ad-43bc-95c2-f02b1d0e4634"}
-{"level":"INFO","time":"2025-11-29T11:42:18.222+0700","caller":"logger/logger.go:37","msg":"service:UpdateWorkspace","msg":"Updating workspace: f7505a0a-24ad-43bc-95c2-f02b1d0e4634"}
-{"level":"INFO","time":"2025-11-29T11:42:18.222+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Getting workspace by ID: f7505a0a-24ad-43bc-95c2-f02b1d0e4634"}
-{"level":"INFO","time":"2025-11-29T11:42:18.225+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Workspace found: My Workspace 2"}
-{"level":"INFO","time":"2025-11-29T11:42:18.225+0700","caller":"logger/logger.go:37","msg":"repository:UpdateWorkspace","msg":"Updating workspace: f7505a0a-24ad-43bc-95c2-f02b1d0e4634"}
-{"level":"INFO","time":"2025-11-29T11:42:18.230+0700","caller":"logger/logger.go:37","msg":"repository:UpdateWorkspace","msg":"Workspace updated successfully: f7505a0a-24ad-43bc-95c2-f02b1d0e4634"}
-{"level":"INFO","time":"2025-11-29T11:42:18.230+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Getting workspace by ID: f7505a0a-24ad-43bc-95c2-f02b1d0e4634"}
-{"level":"INFO","time":"2025-11-29T11:42:18.231+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Workspace found: My Workspace 3"}
-{"level":"INFO","time":"2025-11-29T11:42:18.231+0700","caller":"logger/logger.go:37","msg":"service:UpdateWorkspace","msg":"Workspace updated successfully: My Workspace 3"}
-{"level":"INFO","time":"2025-11-29T11:42:18.231+0700","caller":"logger/logger.go:37","msg":"controller:UpdateWorkspace","msg":"Workspace updated successfully"}
-{"level":"INFO","time":"2025-12-24T10:20:08.198+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
-{"level":"INFO","time":"2025-12-24T10:20:08.214+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
-{"level":"INFO","time":"2025-12-24T10:20:08.214+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
-{"level":"ERROR","time":"2025-12-24T10:20:08.316+0700","caller":"logger/logger.go:45","msg":"config:AutoMigrate","msg":"Migration failed (base tables): ERROR: column \"full_name\" of relation \"users\" contains null values (SQLSTATE 23502)","stacktrace":"workHub/logger.Error\n\tD:/here/workHub/logger/logger.go:45\nworkHub/config.AutoMigrate\n\tD:/here/workHub/config/database.go:55\nmain.main\n\tD:/here/workHub/cmd/main.go:64\nruntime.main\n\tC:/Program Files/Go/src/runtime/proc.go:283"}
-{"level":"ERROR","time":"2025-12-24T10:20:08.317+0700","caller":"logger/logger.go:45","msg":"main:main","msg":"Failed to migrate database: failed to auto migrate base tables: ERROR: column \"full_name\" of relation \"users\" contains null values (SQLSTATE 23502)","stacktrace":"workHub/logger.Error\n\tD:/here/workHub/logger/logger.go:45\nmain.main\n\tD:/here/workHub/cmd/main.go:65\nruntime.main\n\tC:/Program Files/Go/src/runtime/proc.go:283"}
-{"level":"INFO","time":"2025-12-24T10:22:12.168+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
-{"level":"INFO","time":"2025-12-24T10:22:12.178+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
-{"level":"INFO","time":"2025-12-24T10:22:12.178+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
-{"level":"INFO","time":"2025-12-24T10:22:12.654+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, workspaces, books, borrows, role_permissions, user_roles, workspace_members tables created/updated"}
-{"level":"INFO","time":"2025-12-24T10:22:12.657+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
-{"level":"INFO","time":"2025-12-24T10:22:57.653+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
-{"level":"INFO","time":"2025-12-24T10:22:57.654+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example.com"}
-{"level":"INFO","time":"2025-12-24T10:22:57.655+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example.com"}
-{"level":"INFO","time":"2025-12-24T10:22:57.659+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy (ID: 5cb803f9-8ebb-4458-bedc-615f1548ab0e)"}
-{"level":"INFO","time":"2025-12-24T10:22:57.725+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
-{"level":"INFO","time":"2025-12-24T10:22:57.732+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 5cb803f9-8ebb-4458-bedc-615f1548ab0e"}
-{"level":"INFO","time":"2025-12-24T10:22:57.737+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: 8698425f-1443-4720-95cc-dac0a0d51523"}
-{"level":"INFO","time":"2025-12-24T10:22:57.737+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to DB successfully: 8698425f-1443-4720-95cc-dac0a0d51523"}
-{"level":"INFO","time":"2025-12-24T10:22:57.738+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Saving session to Redis: 8698425f-1443-4720-95cc-dac0a0d51523"}
-{"level":"INFO","time":"2025-12-24T10:22:57.744+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Session saved to Redis successfully: 8698425f-1443-4720-95cc-dac0a0d51523"}
-{"level":"INFO","time":"2025-12-24T10:22:57.745+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: 8698425f-1443-4720-95cc-dac0a0d51523"}
-{"level":"INFO","time":"2025-12-24T10:22:57.745+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
-{"level":"INFO","time":"2025-12-24T10:22:57.746+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"ERROR","time":"2025-12-24T10:28:59.704+0700","caller":"logger/logger.go:45","msg":"jwt:VerifyToken","msg":"JWT validation error: illegal base64 data at input byte 0","stacktrace":"workHub/logger.Error\n\tD:/here/workHub/logger/logger.go:45\nworkHub/pkg/jwt.VerifyToken\n\tD:/here/workHub/pkg/jwt/vertify.go:25\nworkHub/router.InitRouter.AuthMiddleware.func1\n\tD:/here/workHub/middleware/auth_middleware.go:48\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.CustomRecoveryWithWriter.func1\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/recovery.go:92\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.LoggerWithConfig.func1\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/logger.go:249\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/gin.go:689\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/gin.go:643\nnet/http.serverHandler.ServeHTTP\n\tC:/Program Files/Go/src/net/http/server.go:3301\nnet/http.(*conn).serve\n\tC:/Program Files/Go/src/net/http/server.go:2102"}
+{"level":"WARN","time":"2025-12-24T10:28:59.704+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Token verification failed: un authentication"}
+{"level":"INFO","time":"2025-12-24T10:30:34.969+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-12-24T10:30:34.980+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-12-24T10:30:34.980+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-12-24T10:30:35.228+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, workspaces, books, borrows, role_permissions, user_roles, workspace_members tables created/updated"}
+{"level":"INFO","time":"2025-12-24T10:30:35.230+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-12-24T10:30:42.043+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
+{"level":"INFO","time":"2025-12-24T10:30:42.044+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example.com"}
+{"level":"INFO","time":"2025-12-24T10:30:42.058+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example.com"}
+{"level":"INFO","time":"2025-12-24T10:30:42.064+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy (ID: 5cb803f9-8ebb-4458-bedc-615f1548ab0e)"}
+{"level":"INFO","time":"2025-12-24T10:30:42.128+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
+{"level":"INFO","time":"2025-12-24T10:30:42.132+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 5cb803f9-8ebb-4458-bedc-615f1548ab0e"}
+{"level":"INFO","time":"2025-12-24T10:30:42.136+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.136+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to DB successfully: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.136+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Saving session to Redis: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.139+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Session saved to Redis successfully: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.140+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.140+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
+{"level":"INFO","time":"2025-12-24T10:30:42.140+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"INFO","time":"2025-12-24T10:30:51.771+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com"}

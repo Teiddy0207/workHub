@@ -42,7 +42,19 @@ func AuthMiddleware(publicKey *rsa.PublicKey) gin.HandlerFunc {
 			return
 		}
 
-		tokenStr := parts[1]
+		tokenStr := strings.TrimSpace(parts[1])
+		
+		// Kiểm tra token không rỗng
+		if tokenStr == "" {
+			logger.Warn("middleware", "AuthMiddleware", "Empty token string")
+			c.JSON(401, gin.H{
+				"status":  "error",
+				"code":    401,
+				"message": "Token is required",
+			})
+			c.Abort()
+			return
+		}
 
 		// Verify token
 		claims, err := jwt.VerifyToken(context.Background(), publicKey, tokenStr)
@@ -70,8 +82,8 @@ func AuthMiddleware(publicKey *rsa.PublicKey) gin.HandlerFunc {
 		}
 
 		// Lưu user info vào context
-		// Convert userID từ int sang string (vì User entity dùng string UUID)
-		userID := fmt.Sprintf("%d", claims.UserInfo.ID)
+	
+		userID := claims.UserInfo.ID
 		c.Set("user_id", userID)
 		c.Set("user_email", claims.UserInfo.Email)
 		c.Set("user_username", claims.UserInfo.Username)
