@@ -12,15 +12,27 @@ var (
 )
 
 // GetUserID lấy user ID từ context (được set bởi AuthMiddleware)
-func GetUserID(c *gin.Context) (int, error) {
+func GetUserID(c *gin.Context) (string, error) {
 	userID, exists := c.Get("user_id")
 	if !exists {
-		return 0, ErrUserNotAuthenticated
+		return "", ErrUserNotAuthenticated
 	}
-	if id, ok := userID.(int); ok {
+	if id, ok := userID.(string); ok {
 		return id, nil
 	}
-	return 0, ErrUserNotAuthenticated
+	return "", ErrUserNotAuthenticated
+}
+
+// GetUserRole lấy user role từ context
+func GetUserRole(c *gin.Context) (string, error) {
+	role, exists := c.Get("user_role")
+	if !exists {
+		return "", ErrUserNotAuthenticated
+	}
+	if r, ok := role.(string); ok {
+		return r, nil
+	}
+	return "", ErrUserNotAuthenticated
 }
 
 // GetUserEmail lấy user email từ context

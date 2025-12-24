@@ -3,15 +3,9 @@ package repository
 import (
 	"context"
 	"workHub/internal/entity"
-
-	// "workHub/internal/dto"
-	// "workHub/internal/mapper"
-	// "workHub/internal/repository"
-	// "workHub/internal/entity"
+	"workHub/pkg/params"
 
 	"gorm.io/gorm"
-	// "workHub/internal/service"
-	"workHub/pkg/params"
 )
 
 type authRepository struct {
@@ -21,6 +15,11 @@ type authRepository struct {
 type AuthRepository interface {
 	ListUsers(ctx context.Context, params params.QueryParams) (entity.PaginatedUsers, error)
 	GetUserByEmail(ctx context.Context, email string) (entity.User, error)
+	GetUserByID(ctx context.Context, id string) (entity.User, error)
+	CreateUser(ctx context.Context, user *entity.User) error
+	UpdateUser(ctx context.Context, user *entity.User) error
+	DeleteUser(ctx context.Context, id string) error
+	HasActiveBorrows(ctx context.Context, userID string) (bool, error)
 }
 
 func NewAuthRepository(db *gorm.DB) AuthRepository {
@@ -34,10 +33,10 @@ func (r *authRepository) ListUsers(ctx context.Context, params params.QueryParam
 	// Tạo query cơ bản
 	query := r.db.WithContext(ctx).Model(&entity.User{})
 
-	// Nếu có tìm kiếm theo username hoặc email
+	// Nếu có tìm kiếm theo email hoặc full_name
 	if params.Search != "" {
 		searchTerm := "%" + params.Search + "%"
-		query = query.Where("username ILIKE ? OR email ILIKE ?", searchTerm, searchTerm)
+		query = query.Where("email ILIKE ? OR full_name ILIKE ?", searchTerm, searchTerm)
 	}
 
 	// Đếm tổng số user trước khi phân trang
@@ -85,4 +84,33 @@ func (r *authRepository) GetUserByEmail(ctx context.Context, email string) (enti
 	}
 	
 	return user, nil
+}
+
+func (r *authRepository) GetUserByID(ctx context.Context, id string) (entity.User, error) {
+	var user entity.User
+	err := r.db.WithContext(ctx).
+		Where("id = ?", id).
+		First(&user).Error
+	return user, err
+}
+
+func (r *authRepository) CreateUser(ctx context.Context, user *entity.User) error {
+	return r.db.WithContext(ctx).Create(user).Error
+}
+
+func (r *authRepository) UpdateUser(ctx context.Context, user *entity.User) error {
+	return r.db.WithContext(ctx).Save(user).Error
+}
+
+func (r *authRepository) DeleteUser(ctx context.Context, id string) error {
+	return r.db.WithContext(ctx).Delete(&entity.User{}, "id = ?", id).Error
+}
+
+func (r *authRepository) HasActiveBorrows(ctx context.Context, userID string) (bool, error) {
+	var count int64
+	err := r.db.WithContext(ctx).
+		Model(&entity.Borrow{}).
+		Where("user_id = ? AND status != ?", userID, "returned").
+		Count(&count).Error
+	return count > 0, err
 }

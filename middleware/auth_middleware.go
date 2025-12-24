@@ -5,9 +5,9 @@ import (
 	"crypto/rsa"
 	"fmt"
 	"strings"
-	"workHub/pkg/jwt"
 	"workHub/constant"
 	"workHub/logger"
+	"workHub/pkg/jwt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -70,7 +70,9 @@ func AuthMiddleware(publicKey *rsa.PublicKey) gin.HandlerFunc {
 		}
 
 		// Lưu user info vào context
-		c.Set("user_id", claims.UserInfo.ID)
+		// Convert userID từ int sang string (vì User entity dùng string UUID)
+		userID := fmt.Sprintf("%d", claims.UserInfo.ID)
+		c.Set("user_id", userID)
 		c.Set("user_email", claims.UserInfo.Email)
 		c.Set("user_username", claims.UserInfo.Username)
 		c.Set("user_info", claims.UserInfo)
@@ -80,4 +82,3 @@ func AuthMiddleware(publicKey *rsa.PublicKey) gin.HandlerFunc {
 		c.Next()
 	}
 }
-
