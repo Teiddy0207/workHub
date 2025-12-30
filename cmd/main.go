@@ -8,6 +8,7 @@ import (
 	internalconfig "workHub/internal/config"
 	"workHub/logger"
 	"workHub/router"
+	dbseed "workHub/db"
 
 	"workHub/pkg/utils"
 
@@ -64,6 +65,13 @@ func main() {
 	if err := config.AutoMigrate(db); err != nil {
 		logger.Error("main", "main", fmt.Sprintf("Failed to migrate database: %v", err))
 		log.Fatal(err)
+	}
+
+	// Seed data
+	if err := dbseed.SeedBooks(db); err != nil {
+		logger.Error("main", "main", fmt.Sprintf("Failed to seed books: %v", err))
+		// Không fatal, chỉ log warning để app vẫn chạy được
+		logger.Warn("main", "main", "Continuing without seed data")
 	}
 
 	r := router.InitRouter(db)

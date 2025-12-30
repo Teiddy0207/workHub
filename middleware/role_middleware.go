@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"fmt"
 	"workHub/internal/repository"
 	"workHub/logger"
 
@@ -26,13 +27,14 @@ func RoleMiddleware(authRepo repository.AuthRepository) gin.HandlerFunc {
 		// Load user từ DB để lấy role
 		user, err := authRepo.GetUserByID(context.Background(), userIDStr)
 		if err != nil {
-			logger.Warn("middleware", "RoleMiddleware", "Failed to load user role")
+			logger.Warn("middleware", "RoleMiddleware", fmt.Sprintf("Failed to load user role for userID=%s: %v", userIDStr, err))
 			c.Next()
 			return
 		}
 
 		// Lưu role vào context
 		c.Set("user_role", user.Role)
+		logger.Info("middleware", "RoleMiddleware", fmt.Sprintf("User role loaded: userID=%s, role=%s", userIDStr, user.Role))
 		c.Next()
 	}
 }

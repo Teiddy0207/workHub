@@ -8,8 +8,9 @@ import (
 	"workHub/pkg/params"
 	"workHub/logger"
 	"workHub/helper"
-	"github.com/gin-gonic/gin"
 	"workHub/constant"
+
+	"github.com/gin-gonic/gin"
 )
 
 type AuthController struct {
@@ -103,11 +104,27 @@ func (a *AuthController) GetUserByID(c *gin.Context) {
 	ctx := c.Request.Context()
 	userID := c.Param("id")
 
-	currentUserID, _ := helper.GetUserID(c)
-	currentUserRole, _ := helper.GetUserRole(c)
+	currentUserID, err := helper.GetUserID(c)
+	if err != nil {
+		c.JSON(401, gin.H{
+			"success": false,
+			"message": "Unauthorized",
+		})
+		return
+	}
+
+	currentUserRole, err := helper.GetUserRole(c)
+	if err != nil {
+		logger.Warn("controller", "GetUserByID", fmt.Sprintf("Failed to get user role: %v, defaulting to student", err))
+		// Nếu không lấy được role, mặc định là student (không phải admin)
+		currentUserRole = "student"
+	}
+
+	logger.Info("controller", "GetUserByID", fmt.Sprintf("Checking access: currentUserID=%s, targetUserID=%s, role=%s", currentUserID, userID, currentUserRole))
 
 	// Kiểm tra quyền: admin hoặc chính user đó
 	if currentUserRole != "admin" && currentUserID != userID {
+		logger.Warn("controller", "GetUserByID", fmt.Sprintf("Access denied: role=%s, currentUserID=%s, targetUserID=%s", currentUserRole, currentUserID, userID))
 		c.JSON(403, gin.H{
 			"success": false,
 			"message": "Forbidden",

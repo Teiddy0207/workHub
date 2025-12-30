@@ -9,6 +9,10 @@ import (
 
 func InitRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
+	
+	// CORS middleware - phải đặt trước tất cả routes
+	r.Use(middleware.CORSMiddleware())
+	
 	deps, err := InitDependencies(db)
 	if err != nil {
 		panic(err)

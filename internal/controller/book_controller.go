@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"workHub/constant"
+	"workHub/helper"
 	"workHub/internal/dto"
 	"workHub/internal/service"
 	"workHub/logger"
@@ -26,6 +27,20 @@ func NewBookController(service service.BookServiceInterface) *BookController {
 
 func (b *BookController) Create(c *gin.Context) {
 	ctx := c.Request.Context()
+
+	// Kiểm tra quyền: chỉ admin mới được tạo sách
+	userRole, err := helper.GetUserRole(c)
+	if err != nil {
+		userRole = "student" // Default nếu không lấy được
+	}
+
+	if userRole != "admin" {
+		c.JSON(403, gin.H{
+			"success": false,
+			"message": "Forbidden: Only admin can create books",
+		})
+		return
+	}
 
 	var req dto.BookRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -93,6 +108,20 @@ func (b *BookController) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	id := c.Param("id")
 
+	// Kiểm tra quyền: chỉ admin mới được cập nhật sách
+	userRole, err := helper.GetUserRole(c)
+	if err != nil {
+		userRole = "student"
+	}
+
+	if userRole != "admin" {
+		c.JSON(403, gin.H{
+			"success": false,
+			"message": "Forbidden: Only admin can update books",
+		})
+		return
+	}
+
 	var req dto.UpdateBookRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		b.BaseHandler.BadRequest(c, "Cập nhật sách thất bại")
@@ -126,7 +155,21 @@ func (b *BookController) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	id := c.Param("id")
 
-	err := b.service.Delete(ctx, id)
+	// Kiểm tra quyền: chỉ admin mới được xóa sách
+	userRole, err := helper.GetUserRole(c)
+	if err != nil {
+		userRole = "student"
+	}
+
+	if userRole != "admin" {
+		c.JSON(403, gin.H{
+			"success": false,
+			"message": "Forbidden: Only admin can delete books",
+		})
+		return
+	}
+
+	err = b.service.Delete(ctx, id)
 	if err != nil {
 		if err == constant.ErrCannotDeleteBookWithActiveBorrows {
 			c.JSON(400, gin.H{

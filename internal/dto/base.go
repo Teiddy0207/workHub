@@ -14,3 +14,9 @@ type BaseRequest struct {
 	UserID uuid.UUID `json:"user_id"`
 	Token  string    `json:"-" header:"Authorization"`
 }
+
+
+type Validate struct {
+	Valid  bool     `json:"valid"`
+	Errors []string `json:"errors,omitempty"`
+}

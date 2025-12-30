@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 	"workHub/internal/dto"
@@ -13,6 +14,7 @@ import (
 	"workHub/constant"
 	"workHub/logger"
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type AuthService struct {
@@ -136,8 +138,15 @@ func (service *AuthService) Register(ctx context.Context, req dto.RegisterReques
 	// Kiểm tra email đã tồn tại
 	_, err := service.AuthRepo.GetUserByEmail(ctx, req.Email)
 	if err == nil {
+		// User đã tồn tại
 		return dto.RegisterResponse{}, constant.ErrEmailAlreadyExists
 	}
+	// Nếu lỗi không phải là "not found", có thể là lỗi khác (DB error, context canceled, etc.)
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		// Có lỗi khác (không phải "not found"), trả về lỗi đó
+		return dto.RegisterResponse{}, err
+	}
+	// err == gorm.ErrRecordNotFound hoặc err != nil nhưng là not found -> OK, tiếp tục
 
 	// Validate role
 	if req.Role == "" {
