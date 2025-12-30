@@ -5,7 +5,7 @@ import (
 )
 
 type Users struct {
-	ID           int                 `json:"id,omitempty"`
+	ID           string              `json:"id,omitempty"` // UUID string
 	Name         string              `json:"name,omitempty"`
 	Username     string              `json:"username,omitempty"`
 	Email        string              `json:"email,omitempty"`
@@ -13,13 +13,13 @@ type Users struct {
 	Address      string              `json:"address,omitempty"`
 	Password     string              `json:"password,omitempty"`
 	Role         string              `json:"role,omitempty"`
-	RoleID       int                 `json:"role_id,omitempty"`
+	RoleID       string              `json:"role_id,omitempty"` // UUID string
 	Department   string              `json:"department,omitempty"`
-	DepartmentID int                 `json:"department_id,omitempty"`
+	DepartmentID string              `json:"department_id,omitempty"` // UUID string
 	StoreName    string              `json:"store_name,omitempty"`
-	LocationID   uint                `json:"location_id,omitempty"`
-	CreatedBy    int                 `json:"created_by,omitempty"`
-	UpdatedBy    int                 `json:"updated_by,omitempty"`
+	LocationID   string              `json:"location_id,omitempty"` // UUID string
+	CreatedBy    string              `json:"created_by,omitempty"` // UUID string
+	UpdatedBy    string              `json:"updated_by,omitempty"` // UUID string
 	AvatarURL    string              `json:"avatar_url,omitempty"`
 	Avatar       string              `json:"avatar,omitempty"`
 	// Gender       constant.Gender     `json:"gender,omitempty"`
@@ -30,5 +30,5 @@ type Users struct {
 	// CreatedAt    time.Time           `json:"created_at,omitempty"`
 	// UpdatedAt    time.Time           `json:"updated_at,omitempty"`
 	// DeletedAt    *time.Time          `json:"deleted_at,omitempty"`
-	QueueID      int                 `json:"queue_id,omitempty"`
+	QueueID      string              `json:"queue_id,omitempty"` // UUID string
 }

@@ -10,12 +10,15 @@ import (
 )
 
 type Dependencies struct {
-	PublicKey          *rsa.PublicKey
-	AuthController     *controller.AuthController
-	RoleController     *controller.RoleController
+	PublicKey            *rsa.PublicKey
+	AuthController       *controller.AuthController
+	BookController       *controller.BookController
+	BorrowController     *controller.BorrowController
+	RoleController       *controller.RoleController
 	PermissionController *controller.PermissionController
-	WorkspaceController *controller.WorkspaceController
-	PermissionRepo     repository.PermissionRepository
+	WorkspaceController  *controller.WorkspaceController
+	PermissionRepo       repository.PermissionRepository
+	AuthRepo             repository.AuthRepository
 }
 
 func InitDependencies(db *gorm.DB) (*Dependencies, error) {
@@ -43,13 +46,24 @@ func InitDependencies(db *gorm.DB) (*Dependencies, error) {
 	workspaceService := service.NewWorkspaceService(workspaceRepo, authRepo)
 	workspaceController := controller.NewWorkspaceController(workspaceService)
 
+	bookRepo := repository.NewBookRepository(db)
+	bookService := service.NewBookService(bookRepo)
+	bookController := controller.NewBookController(bookService)
+
+	borrowRepo := repository.NewBorrowRepository(db)
+	borrowService := service.NewBorrowService(borrowRepo, bookRepo, authRepo, db)
+	borrowController := controller.NewBorrowController(borrowService)
+
 	return &Dependencies{
-		PublicKey:           jwtConfig.PublicKey,
-		AuthController:      authController,
-		RoleController:      roleController,
+		PublicKey:            jwtConfig.PublicKey,
+		AuthController:       authController,
+		BookController:       bookController,
+		BorrowController:     borrowController,
+		RoleController:       roleController,
 		PermissionController: permissionController,
-		WorkspaceController: workspaceController,
+		WorkspaceController:  workspaceController,
 		PermissionRepo:       permissionRepo,
+		AuthRepo:             authRepo,
 	}, nil
 }
 

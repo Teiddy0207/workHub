@@ -1,29 +1,21 @@
-{"level":"INFO","time":"2025-11-29T10:00:53.130+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
-{"level":"INFO","time":"2025-11-29T10:00:53.154+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
-{"level":"INFO","time":"2025-11-29T10:00:53.154+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
-{"level":"INFO","time":"2025-11-29T10:00:53.422+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, workspaces, role_permissions, user_roles tables created/updated"}
-{"level":"INFO","time":"2025-11-29T10:00:53.427+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
-{"level":"WARN","time":"2025-11-29T10:08:36.347+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Missing Authorization header"}
-{"level":"INFO","time":"2025-11-29T10:08:42.689+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
-{"level":"INFO","time":"2025-11-29T10:08:42.691+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example.com"}
-{"level":"INFO","time":"2025-11-29T10:08:42.692+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example.com"}
-{"level":"INFO","time":"2025-11-29T10:08:42.701+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy (ID: 5cb803f9-8ebb-4458-bedc-615f1548ab0e)"}
-{"level":"INFO","time":"2025-11-29T10:08:42.766+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
-{"level":"INFO","time":"2025-11-29T10:08:42.775+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 5cb803f9-8ebb-4458-bedc-615f1548ab0e"}
-{"level":"INFO","time":"2025-11-29T10:08:42.784+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: 6cc51652-d0a9-48ef-8e10-837efe34af77"}
-{"level":"INFO","time":"2025-11-29T10:08:42.784+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to DB successfully: 6cc51652-d0a9-48ef-8e10-837efe34af77"}
-{"level":"INFO","time":"2025-11-29T10:08:42.784+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Saving session to Redis: 6cc51652-d0a9-48ef-8e10-837efe34af77"}
-{"level":"INFO","time":"2025-11-29T10:08:42.799+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Session saved to Redis successfully: 6cc51652-d0a9-48ef-8e10-837efe34af77"}
-{"level":"INFO","time":"2025-11-29T10:08:42.801+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: 6cc51652-d0a9-48ef-8e10-837efe34af77"}
-{"level":"INFO","time":"2025-11-29T10:08:42.801+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
-{"level":"INFO","time":"2025-11-29T10:08:42.802+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
-{"level":"INFO","time":"2025-11-29T10:08:58.545+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com"}
-{"level":"INFO","time":"2025-11-29T10:08:58.550+0700","caller":"logger/logger.go:37","msg":"controller:CreateWorkspace","msg":"CreateWorkspace controller called"}
-{"level":"INFO","time":"2025-11-29T10:08:58.551+0700","caller":"logger/logger.go:37","msg":"controller:CreateWorkspace","msg":"Request received: name=My Workspace, owner_id=123e4567-e89b-12d3-a456-426614174000"}
-{"level":"INFO","time":"2025-11-29T10:08:58.551+0700","caller":"logger/logger.go:37","msg":"service:CreateWorkspace","msg":"Creating new workspace: My Workspace"}
-{"level":"INFO","time":"2025-11-29T10:08:58.551+0700","caller":"logger/logger.go:37","msg":"repository:CreateWorkspace","msg":"Creating workspace: My Workspace"}
-{"level":"INFO","time":"2025-11-29T10:08:58.558+0700","caller":"logger/logger.go:37","msg":"repository:CreateWorkspace","msg":"Workspace created successfully: 3ae734eb-81ae-4373-922e-7d19708c7544"}
-{"level":"INFO","time":"2025-11-29T10:08:58.558+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Getting workspace by ID: 3ae734eb-81ae-4373-922e-7d19708c7544"}
-{"level":"INFO","time":"2025-11-29T10:08:58.561+0700","caller":"logger/logger.go:37","msg":"repository:GetWorkspaceByID","msg":"Workspace found: My Workspace"}
-{"level":"INFO","time":"2025-11-29T10:08:58.561+0700","caller":"logger/logger.go:37","msg":"service:CreateWorkspace","msg":"Workspace created successfully: My Workspace"}
-{"level":"INFO","time":"2025-11-29T10:08:58.561+0700","caller":"logger/logger.go:37","msg":"controller:CreateWorkspace","msg":"Workspace created successfully"}
+{"level":"ERROR","time":"2025-12-24T10:28:59.704+0700","caller":"logger/logger.go:45","msg":"jwt:VerifyToken","msg":"JWT validation error: illegal base64 data at input byte 0","stacktrace":"workHub/logger.Error\n\tD:/here/workHub/logger/logger.go:45\nworkHub/pkg/jwt.VerifyToken\n\tD:/here/workHub/pkg/jwt/vertify.go:25\nworkHub/router.InitRouter.AuthMiddleware.func1\n\tD:/here/workHub/middleware/auth_middleware.go:48\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.CustomRecoveryWithWriter.func1\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/recovery.go:92\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.LoggerWithConfig.func1\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/logger.go:249\ngithub.com/gin-gonic/gin.(*Context).Next\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/context.go:192\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/gin.go:689\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\tC:/Users/NCPC/go/pkg/mod/github.com/gin-gonic/gin@v1.11.0/gin.go:643\nnet/http.serverHandler.ServeHTTP\n\tC:/Program Files/Go/src/net/http/server.go:3301\nnet/http.(*conn).serve\n\tC:/Program Files/Go/src/net/http/server.go:2102"}
+{"level":"WARN","time":"2025-12-24T10:28:59.704+0700","caller":"logger/logger.go:41","msg":"middleware:AuthMiddleware","msg":"Token verification failed: un authentication"}
+{"level":"INFO","time":"2025-12-24T10:30:34.969+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Connecting to database..."}
+{"level":"INFO","time":"2025-12-24T10:30:34.980+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Database connected successfully"}
+{"level":"INFO","time":"2025-12-24T10:30:34.980+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Starting database migration..."}
+{"level":"INFO","time":"2025-12-24T10:30:35.228+0700","caller":"logger/logger.go:37","msg":"config:AutoMigrate","msg":"Database migration completed: roles, users, sessions, permissions, workspaces, books, borrows, role_permissions, user_roles, workspace_members tables created/updated"}
+{"level":"INFO","time":"2025-12-24T10:30:35.230+0700","caller":"logger/logger.go:37","msg":"main:main","msg":"Server đang chạy tại: http://localhost:8088"}
+{"level":"INFO","time":"2025-12-24T10:30:42.043+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Login controller called"}
+{"level":"INFO","time":"2025-12-24T10:30:42.044+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Request received: email=test@example.com"}
+{"level":"INFO","time":"2025-12-24T10:30:42.058+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login attempt for email: test@example.com"}
+{"level":"INFO","time":"2025-12-24T10:30:42.064+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"User found: teddy (ID: 5cb803f9-8ebb-4458-bedc-615f1548ab0e)"}
+{"level":"INFO","time":"2025-12-24T10:30:42.128+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Password verified successfully"}
+{"level":"INFO","time":"2025-12-24T10:30:42.132+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Creating session for user: 5cb803f9-8ebb-4458-bedc-615f1548ab0e"}
+{"level":"INFO","time":"2025-12-24T10:30:42.136+0700","caller":"logger/logger.go:37","msg":"repository:CreateSession","msg":"Session created successfully: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.136+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to DB successfully: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.136+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Saving session to Redis: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.139+0700","caller":"logger/logger.go:37","msg":"repository:SaveSession","msg":"Session saved to Redis successfully: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.140+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Session saved to Redis successfully: d35353fc-de71-4e0d-9b63-2ba411339467"}
+{"level":"INFO","time":"2025-12-24T10:30:42.140+0700","caller":"logger/logger.go:37","msg":"service:Login","msg":"Login successful, JWT tokens generated"}
+{"level":"INFO","time":"2025-12-24T10:30:42.140+0700","caller":"logger/logger.go:37","msg":"controller:Login","msg":"Service success, sending response"}
+{"level":"INFO","time":"2025-12-24T10:30:51.771+0700","caller":"logger/logger.go:37","msg":"middleware:AuthMiddleware","msg":"User authenticated: test@example.com"}

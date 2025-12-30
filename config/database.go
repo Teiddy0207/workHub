@@ -35,11 +35,49 @@ func AutoMigrate(db *gorm.DB) error {
 	// Xóa các bảng junction trước nếu tồn tại (để tránh conflict foreign key)
 	db.Exec("DROP TABLE IF EXISTS role_permissions CASCADE")
 	db.Exec("DROP TABLE IF EXISTS user_roles CASCADE")
+	db.Exec("DROP TABLE IF EXISTS workspace_members CASCADE")
 	
 	// Xóa và tạo lại các bảng cha nếu có vấn đề với primary key
 	// (Chỉ xóa nếu cần thiết - có thể comment nếu muốn giữ data)
 	// db.Exec("DROP TABLE IF EXISTS roles CASCADE")
 	// db.Exec("DROP TABLE IF EXISTS permissions CASCADE")
+	
+	// Xử lý migration cho bảng users - thêm các cột mới nếu chưa có và set giá trị mặc định
+	db.Exec(`
+		DO $$ 
+		BEGIN
+			-- Thêm cột full_name nếu chưa có
+			IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='users' AND column_name='full_name') THEN
+				ALTER TABLE users ADD COLUMN full_name TEXT;
+				-- Set giá trị mặc định cho các record cũ
+				UPDATE users SET full_name = COALESCE(username, email, 'User') WHERE full_name IS NULL;
+				-- Sau đó mới thêm NOT NULL constraint
+				ALTER TABLE users ALTER COLUMN full_name SET NOT NULL;
+			ELSE
+				-- Nếu cột đã tồn tại nhưng có giá trị NULL, update chúng
+				UPDATE users SET full_name = COALESCE(username, email, 'User') WHERE full_name IS NULL;
+				-- Thêm NOT NULL constraint nếu chưa có
+				ALTER TABLE users ALTER COLUMN full_name SET NOT NULL;
+			END IF;
+			
+			-- Thêm cột phone_number nếu chưa có
+			IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='users' AND column_name='phone_number') THEN
+				ALTER TABLE users ADD COLUMN phone_number TEXT;
+			END IF;
+			
+			-- Thêm cột address nếu chưa có
+			IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='users' AND column_name='address') THEN
+				ALTER TABLE users ADD COLUMN address TEXT;
+			END IF;
+			
+			-- Thêm cột role nếu chưa có và set giá trị mặc định
+			IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='users' AND column_name='role') THEN
+				ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'student';
+				UPDATE users SET role = 'student' WHERE role IS NULL;
+				ALTER TABLE users ALTER COLUMN role SET NOT NULL;
+			END IF;
+		END $$;
+	`)
 	
 	// Migrate các bảng cha trước (không có foreign key)
 	err := db.AutoMigrate(
@@ -48,6 +86,7 @@ func AutoMigrate(db *gorm.DB) error {
 		&entity.Permission{},
 		&entity.Session{},
 		&entity.Workspace{},
+		&entity.Book{},
 	)
 	if err != nil {
 		logger.Error("config", "AutoMigrate", fmt.Sprintf("Migration failed (base tables): %v", err))
@@ -87,12 +126,14 @@ func AutoMigrate(db *gorm.DB) error {
 	err = db.AutoMigrate(
 		&entity.RolePermission{},
 		&entity.UserRole{},
+		&entity.WorkspaceMember{},
+		&entity.Borrow{},
 	)
 	if err != nil {
 		logger.Error("config", "AutoMigrate", fmt.Sprintf("Migration failed (junction tables): %v", err))
 		return fmt.Errorf("failed to auto migrate junction tables: %w", err)
 	}
 	
-	logger.Info("config", "AutoMigrate", "Database migration completed: roles, users, sessions, permissions, workspaces, role_permissions, user_roles tables created/updated")
+	logger.Info("config", "AutoMigrate", "Database migration completed: roles, users, sessions, permissions, workspaces, books, borrows, role_permissions, user_roles, workspace_members tables created/updated")
 	return nil
 }

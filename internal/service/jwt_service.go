@@ -74,12 +74,11 @@ func (j *JWTService) GenerateRefreshToken(ctx context.Context, userInfo dto.User
 // GenerateAccessTokenFromEntity tạo access token từ entity.User
 func (j *JWTService) GenerateAccessTokenFromEntity(ctx context.Context, user entity.User) (string, *time.Time, error) {
 	// Chuyển đổi entity.User thành dto.Users
-	// Note: dto.Users.ID là int nhưng entity.User.ID là string
-	// Tạm thời sử dụng 0, có thể cần cải thiện sau
 	userInfo := dto.Users{
-		ID:       0, // TODO: Cần xử lý conversion từ string sang int
+		ID:       user.ID, // UUID string
 		Username: user.Username,
 		Email:    user.Email,
+		Role:     user.Role,
 	}
 
 	jwtReq := jwt.JwtReq{
@@ -100,12 +99,11 @@ func (j *JWTService) GenerateAccessTokenFromEntity(ctx context.Context, user ent
 // GenerateRefreshTokenFromEntity tạo refresh token từ entity.User
 func (j *JWTService) GenerateRefreshTokenFromEntity(ctx context.Context, user entity.User) (string, *time.Time, error) {
 	// Chuyển đổi entity.User thành dto.Users
-	// Note: dto.Users.ID là int nhưng entity.User.ID là string
-	// Tạm thời sử dụng 0, có thể cần cải thiện sau
 	userInfo := dto.Users{
-		ID:       0, // TODO: Cần xử lý conversion từ string sang int
+		ID:       user.ID, // UUID string
 		Username: user.Username,
 		Email:    user.Email,
+		Role:     user.Role,
 	}
 
 	jwtReq := jwt.JwtReq{

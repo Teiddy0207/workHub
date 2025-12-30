@@ -9,25 +9,60 @@ import (
 
 func InitRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
+	
+	// CORS middleware - phải đặt trước tất cả routes
+	r.Use(middleware.CORSMiddleware())
+	
 	deps, err := InitDependencies(db)
 	if err != nil {
 		panic(err)
 	}
-	auth := r.Group("/auth")
+	// Public routes
+	auth := r.Group("/api/auth")
 	{
+		auth.POST("/register", deps.AuthController.Register)
 		auth.POST("/login", deps.AuthController.Login)
+		auth.GET("/me", middleware.AuthMiddleware(deps.PublicKey), middleware.RoleMiddleware(deps.AuthRepo), deps.AuthController.GetMe)
+	}
+
+	// Public book routes
+	books := r.Group("/api/books")
+	{
+		books.GET("", deps.BookController.List)
+		books.GET("/:id", deps.BookController.GetByID)
+		books.GET("/:id/borrows", deps.BorrowController.GetByBookID)
 	}
 
 	protected := r.Group("/api/v1/")
 	protected.Use(middleware.AuthMiddleware(deps.PublicKey))
+	protected.Use(middleware.RoleMiddleware(deps.AuthRepo))
 	{
 		users := protected.Group("/users")
 		{
-			users.GET("", middleware.PermissionMiddleware(deps.PermissionRepo, "user.read"), deps.AuthController.GetListUser)
+			users.GET("", deps.AuthController.GetListUser)
+			users.GET("/:id", deps.AuthController.GetUserByID)
+			users.PUT("/:id", deps.AuthController.UpdateUser)
+			users.DELETE("/:id", deps.AuthController.DeleteUser)
+			users.GET("/:id/borrows", deps.BorrowController.GetByUserID)
 
 			users.POST("/:id/roles", deps.PermissionController.AssignRolesToUser)
 			users.DELETE("/:id/roles", deps.PermissionController.RemoveRolesFromUser)
 			users.GET("/:id/permissions", deps.PermissionController.GetUserPermissions)
+		}
+
+		books := protected.Group("/books")
+		{
+			books.POST("", deps.BookController.Create)
+			books.PUT("/:id", deps.BookController.Update)
+			books.DELETE("/:id", deps.BookController.Delete)
+			books.GET("/search", deps.BookController.Search)
+		}
+
+		borrows := protected.Group("/borrows")
+		{
+			borrows.POST("", deps.BorrowController.BorrowBook)
+			borrows.PUT("/:id/return", deps.BorrowController.ReturnBook)
+			borrows.GET("/active", deps.BorrowController.GetActiveBorrows)
 		}
 
 		roles := protected.Group("/roles")

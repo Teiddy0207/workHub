@@ -21,11 +21,15 @@ func HashPassword(plain string) (string, error) {
 func ToRegisterResponse(user entity.PaginatedUsers) dto.PaginatedUserResponse {
 	var response []dto.RegisterResponse
 
-	for _, users := range user.Items {
+	for _, u := range user.Items {
 		response = append(response, dto.RegisterResponse{
-			ID:       users.ID,
-			Email:    users.Email,
-			Username: users.Username,
+			ID:          u.ID,
+			Email:       u.Email,
+			FullName:    u.FullName,
+			PhoneNumber: u.PhoneNumber,
+			Address:     u.Address,
+			Role:        u.Role,
+			CreatedAt:   u.CreatedAt.Format(time.RFC3339),
 		})
 	}
 	var totalPages int
@@ -51,13 +55,46 @@ func ToUserEntity(req dto.RegisterRequest) (entity.User, error) {
 	if err != nil {
 		return entity.User{}, err
 	}
+	role := req.Role
+	if role == "" {
+		role = "student"
+	}
 	return entity.User{
-		ID:        uuid.NewString(),
-		Email:     req.Email,
-		Username:  req.Username,
-		Password:  hashed,
-		CreatedAt: time.Now(),
+		ID:          uuid.NewString(),
+		Email:       req.Email,
+		Username:    req.Email, // Use email as username if not provided
+		Password:    hashed,
+		FullName:    req.FullName,
+		PhoneNumber: req.PhoneNumber,
+		Address:     req.Address,
+		Role:        role,
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
 	}, nil
+}
+
+func ToUserResponse(user entity.User) dto.UserResponse {
+	return dto.UserResponse{
+		ID:          user.ID,
+		Email:       user.Email,
+		FullName:    user.FullName,
+		PhoneNumber: user.PhoneNumber,
+		Address:     user.Address,
+		Role:        user.Role,
+		CreatedAt:   user.CreatedAt.Format(time.RFC3339),
+		UpdatedAt:   user.UpdatedAt.Format(time.RFC3339),
+	}
+}
+
+func ToUserInfo(user entity.User) dto.UserInfo {
+	return dto.UserInfo{
+		ID:          user.ID,
+		Email:       user.Email,
+		FullName:    user.FullName,
+		PhoneNumber: user.PhoneNumber,
+		Address:     user.Address,
+		Role:        user.Role,
+	}
 }
 
 func ToUserItem(u *entity.User) dto.UserItem {

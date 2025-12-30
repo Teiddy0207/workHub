@@ -5,9 +5,9 @@ import (
 	"crypto/rsa"
 	"fmt"
 	"strings"
-	"workHub/pkg/jwt"
 	"workHub/constant"
 	"workHub/logger"
+	"workHub/pkg/jwt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -42,7 +42,19 @@ func AuthMiddleware(publicKey *rsa.PublicKey) gin.HandlerFunc {
 			return
 		}
 
-		tokenStr := parts[1]
+		tokenStr := strings.TrimSpace(parts[1])
+		
+		// Kiểm tra token không rỗng
+		if tokenStr == "" {
+			logger.Warn("middleware", "AuthMiddleware", "Empty token string")
+			c.JSON(401, gin.H{
+				"status":  "error",
+				"code":    401,
+				"message": "Token is required",
+			})
+			c.Abort()
+			return
+		}
 
 		// Verify token
 		claims, err := jwt.VerifyToken(context.Background(), publicKey, tokenStr)
@@ -70,7 +82,9 @@ func AuthMiddleware(publicKey *rsa.PublicKey) gin.HandlerFunc {
 		}
 
 		// Lưu user info vào context
-		c.Set("user_id", claims.UserInfo.ID)
+	
+		userID := claims.UserInfo.ID
+		c.Set("user_id", userID)
 		c.Set("user_email", claims.UserInfo.Email)
 		c.Set("user_username", claims.UserInfo.Username)
 		c.Set("user_info", claims.UserInfo)
@@ -80,4 +94,3 @@ func AuthMiddleware(publicKey *rsa.PublicKey) gin.HandlerFunc {
 		c.Next()
 	}
 }
-
